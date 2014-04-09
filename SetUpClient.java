@@ -4,8 +4,9 @@ import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.Naming;
 import java.net.MalformedURLException;
+import java.io.Serializable;
 
-public class SetUpClient{
+public class SetUpClient implements Serializable{
 
 	public SetUpClient(){
 		super();
@@ -26,6 +27,7 @@ private void launch() {
 		Remote service = Naming.lookup("//127.0.0.1:1099/QuizMaster");
 		QuizGameInterface quizGame = (QuizGameInterface) service;
 		String receivedEcho = quizGame.echo("Hello!");
+		System.out.println(receivedEcho);
 		}catch(NotBoundException ex){
 			ex.printStackTrace();
 		}catch(MalformedURLException ex){

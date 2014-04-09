@@ -23,12 +23,13 @@ public static void main (String[] args) {
 // 2. Create the registry if there is not one
 	LocateRegistry.createRegistry(1099);
 // 3. Create the server object
-QuizGameServer server = new QuizGameServer();
+QuizGameInterface server = new QuizGameServer();
 // 4. Register (bind) the server object on the registy.
 // The registry may be on a different machine
 String registryHost = "//localhost/";
 String serviceName = "QuizMaster";
 Naming.rebind(registryHost + serviceName, server);
+System.out.println("Working");
 } catch (MalformedURLException ex) {
 ex.printStackTrace();
 } catch (RemoteException ex) {
