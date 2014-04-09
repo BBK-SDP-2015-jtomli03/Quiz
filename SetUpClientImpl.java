@@ -6,37 +6,35 @@ import java.rmi.Naming;
 import java.net.MalformedURLException;
 import java.io.Serializable;
 
-public class SetUpClient implements Serializable{
+public class SetUpClientImpl implements Serializable, SetUpClient{
 
-	public SetUpClient(){
+	public SetUpClientImpl(){
 		super();
 	}
 	
 //launch
-private void launch() {
+private void launch(){
 // 1. If there is no security manager, start one
 	if (System.getSecurityManager() == null) {
 	System.setSecurityManager(new RMISecurityManager());
 	}
+	try{
+	Remote service = Naming.lookup("//127.0.0.1:1099/QuizMaster");		
+	QuizGame quizGame = (QuizGame) service;
+	String receivedEcho = quizGame.echo("Hello!");
+	System.out.println(receivedEcho);
+	}catch(NotBoundException ex){
+		ex.printStackTrace();
+	}catch(MalformedURLException ex){
+		ex.printStackTrace();
+	}catch(RemoteException ex){
+		ex.printStackTrace();
+	}
 }
 
 	public static void main (String[] args){
-		SetUpClient newClient = new SetUpClient();
+		SetUpClientImpl newClient = new SetUpClientImpl();
 		newClient.launch();
-		try{
-		Remote service = Naming.lookup("//127.0.0.1:1099/QuizMaster");
-		QuizGameInterface quizGame = (QuizGameInterface) service;
-		String receivedEcho = quizGame.echo("Hello!");
-		System.out.println(receivedEcho);
-		}catch(NotBoundException ex){
-			ex.printStackTrace();
-		}catch(MalformedURLException ex){
-			ex.printStackTrace();
-		}catch(RemoteException ex){
-			ex.printStackTrace();
-		}
-
-		
 		
 		int choice = 0;
 		String quizName = "";

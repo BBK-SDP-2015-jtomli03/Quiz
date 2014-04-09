@@ -5,7 +5,7 @@ import java.util.*;
 /**
 * An implementation of the Quiz Game Service
 */ 
-public interface QuizGameInterface extends Remote{
+public interface QuizGame extends Remote{
 
 /**
 * Returns the same string passed as parameter

@@ -2,10 +2,10 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
-public class QuizGameServer extends UnicastRemoteObject implements QuizGameInterface{
+public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private List<Quiz> quizzes = new ArrayList<Quiz>();
 
-	public QuizGameServer() throws RemoteException{
+	public QuizGameImpl() throws RemoteException{
 		super();
 	}
 

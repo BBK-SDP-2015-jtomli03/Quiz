@@ -1,13 +1,13 @@
 import java.io.Serializable;
 
-public class Quiz implements Serializable{
+public class QuizImpl implements Quiz, Serializable{
 	private int id = 0;
 	private String quizName = ""; 
 	//private List<Question> questions = new ArrayList<Question>();
 	//private List<Score> scores = new ArrayList<Score>();
 
 
-public Quiz(int id, String quizName){
+public QuizImpl(int id, String quizName){
 	this.id = id;
 	this.quizName = quizName;
 }

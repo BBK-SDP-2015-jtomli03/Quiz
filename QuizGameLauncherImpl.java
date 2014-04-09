@@ -6,16 +6,16 @@ import java.net.MalformedURLException;
 
 
 
-public class QuizGameServerLauncher{
+public class QuizGameLauncherImpl{
 
-	public QuizGameServerLauncher(){
+	public QuizGameLauncherImpl(){
 
 	}
 
 
 //launch
-public static void main (String[] args) {
-// 1. If there is no security manager, start one
+public void launch(){
+//1. If there is no security manager, start one
 	if (System.getSecurityManager() == null) {
 	System.setSecurityManager(new RMISecurityManager());
 	}
@@ -23,7 +23,7 @@ public static void main (String[] args) {
 // 2. Create the registry if there is not one
 	LocateRegistry.createRegistry(1099);
 // 3. Create the server object
-QuizGameInterface server = new QuizGameServer();
+QuizGame server = new QuizGameImpl();
 // 4. Register (bind) the server object on the registy.
 // The registry may be on a different machine
 String registryHost = "//localhost/";
@@ -36,9 +36,10 @@ ex.printStackTrace();
 ex.printStackTrace();
 }
 }
-//public static void main (String[] args){
-//	QuizGameServerLauncher launchQuiz = new QuizGameServerLauncher();
-//	launchQuiz.launch();
-//}
+
+public static void main (String[] args){
+	QuizGameLauncherImpl launchQuiz = new QuizGameLauncherImpl();
+	launchQuiz.launch();
+}
 
 }
