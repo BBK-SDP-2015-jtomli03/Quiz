@@ -1,6 +1,8 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private List<Quiz> quizzes = new ArrayList<Quiz>();
@@ -10,7 +12,7 @@ public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	}
 
 @Override
-public String echo(String s) {
+public String echo(String s) throws RemoteException {
 	System.out.println("Replied to some client saying ’" + s + "’");
 	return s;
 }
