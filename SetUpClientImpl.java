@@ -36,7 +36,7 @@ private void launch(){
 		//SetUpClientImpl newSetUpClient = new SetUpClientImpl();
 		//newSetUpClient.launch();
 		
-		int choice = 0;
+		int choice = 0, quizId = 0;
 		String quizName = "", quizQuestion = "", answer = "", quizComplete = "Y";
 		System.out.println("");
 		System.out.println("*****Welcome to Quiz Master!*****");
@@ -75,7 +75,15 @@ private void launch(){
 				System.out.println("To add another question type 'Y'.");
 				System.out.println("To finish creating the quiz type 'N'.");
 				quizComplete = System.console().readLine();
-				System.out.println(quizComplete);
+				
+
+			}
+			try{
+			QuizGame newGame = new QuizGameImpl();
+			quizId = newGame.addQuiz(quiz);
+			System.out.println("Your quiz id number is; " + quizId);
+			}catch(RemoteException ex){
+				ex.printStackTrace();
 			}
 
 

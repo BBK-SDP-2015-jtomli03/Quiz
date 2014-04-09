@@ -9,12 +9,19 @@ public interface Quiz{
 *
 * @return int a unique quiz ID number
 */
-public int getId();
+int getId();
+
+/**
+*Sets the quiz ID number
+*
+* @param the id number to be set for this quiz
+*/
+void setId(int id);
 
 /**
 * Adds a question to the quiz. Note; questions have answers.
 *
 * @param the question to be added
 */
-public void addQuestion(Question question);
+void addQuestion(Question question);
 }

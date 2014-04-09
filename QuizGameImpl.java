@@ -8,7 +8,7 @@ public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private List<Quiz> quizzes = new ArrayList<Quiz>();
 
 	public QuizGameImpl() throws RemoteException{
-		super();
+		
 	}
 
 @Override
@@ -18,6 +18,15 @@ public String echo(String s) throws RemoteException {
 }
 
 
+
+
+//Adds a quiz to the Quiz Game Server
+@Override
+public int addQuiz(Quiz quiz){
+	quiz.setId(getNewQuizId());
+	quizzes.add(quiz);
+	return quiz.getId();
+}
 
 
 /**

@@ -13,5 +13,14 @@ public interface QuizGame extends Remote{
 * @return the same string passed as parameter
 */
 public String echo(String s) throws RemoteException;
+
+/**
+* Adds a quiz to the Quiz Game Server
+*
+* @param the quiz to be added
+*
+* @return int a unique quiz ID
+*/
+public int addQuiz(Quiz quiz);
 	
 }

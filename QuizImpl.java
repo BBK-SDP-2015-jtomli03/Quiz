@@ -19,10 +19,16 @@ public QuizImpl(int id, String quizName){
 }
 
 
-//Gets the quiz Id number
+//Gets the quiz ID number
 @Override
 public int getId(){
 	return this.id;
+}
+
+//Sets the quiz ID number
+@Override
+public void setId(int id){
+	this.id = id;
 }
 
 //add question
