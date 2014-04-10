@@ -18,6 +18,22 @@ public QuizImpl(int id, String quizName){
 	this.quizName = quizName;
 }
 
+//Returns the highest score
+public Score getHighScore(){
+	Score maxScore = null;
+	int max = 0;
+	if (scores.isEmpty()){
+		return maxScore;
+	}
+	else{
+		for(Score score : scores){
+			if(score.getPlayerScore() > max){
+				maxScore = score;
+			}
+		}
+	return maxScore;
+	}
+}
 
 //Gets the quiz ID number
 @Override
