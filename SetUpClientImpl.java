@@ -72,6 +72,7 @@ public class SetUpClientImpl implements Serializable, SetUpClient{
 			}
 			System.out.println("Your quiz id number is; " + quizGame.addQuiz(quiz));
 			break;
+			
 			case 2:
 			System.out.println("*****You have chosen to close a quiz.*****");
 			System.out.println("");
@@ -79,6 +80,7 @@ public class SetUpClientImpl implements Serializable, SetUpClient{
 			quizId = Integer.parseInt(System.console().readLine());
 			quizGame.closeQuiz(quizId);
 			break;
+			
 			default:
 			//code to ask again
 

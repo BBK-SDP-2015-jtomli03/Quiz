@@ -6,7 +6,7 @@ public class QuizImpl implements Quiz, Serializable{
 	private int id = 0;
 	private String quizName = ""; 
 	private List<Question> questions = new ArrayList<Question>();
-	//private List<Score> scores = new ArrayList<Score>();
+	private List<Score> scores = new ArrayList<Score>();
 
 
 public QuizImpl(String quizName){

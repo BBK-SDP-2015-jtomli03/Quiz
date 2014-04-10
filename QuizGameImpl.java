@@ -9,6 +9,7 @@ import java.util.List;
 
 public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private List<Quiz> quizzes = new ArrayList<Quiz>();
+	//private List<Player> player = new ArrayList<Player>();
 
 	public QuizGameImpl() throws RemoteException{
 		super();
@@ -40,7 +41,6 @@ public void closeQuiz(int quizId) throws RemoteException{
 public int addQuiz(Quiz quiz) throws RemoteException{
 	quiz.setId(getNewQuizId());
 	quizzes.add(quiz);
-	System.out.println("checking this doesnt show in client!!");
 	return quiz.getId();
 }
 
