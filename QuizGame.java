@@ -21,6 +21,14 @@ public String echo(String s) throws RemoteException;
 *
 * @return int a unique quiz ID
 */
-public int addQuiz(Quiz quiz);
+public int addQuiz(Quiz quiz) throws RemoteException;
+
+/**
+* Closes a quiz and removes from the Quiz Game Server list of quizzes
+*
+* @param the quiz to be removed's ID
+*
+*/
+void closeQuiz(int quizId) throws RemoteException;
 	
 }
