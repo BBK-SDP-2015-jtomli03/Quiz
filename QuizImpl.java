@@ -19,6 +19,7 @@ public QuizImpl(int id, String quizName){
 }
 
 //Returns the highest score
+@Override
 public Score getHighScore(){
 	Score maxScore = null;
 	int max = 0;

@@ -21,19 +21,33 @@ public String echo(String s) throws RemoteException {
 	return s;
 }
 
-//get quizzes
-//@Override
-public void closeQuiz(int quizId) throws RemoteException{
+
+
+
+@Override
+public String closeQuiz(int quizId) throws RemoteException{
+	String reply = "Quiz not found.";
 	for(Quiz quiz: quizzes){
 		if(quiz.getId() == quizId){
-			//get the highest score and winners details
-			//return these details to the client
+			Score highScore = quiz.getHighScore();
+			if(highScore == null){
+				reply = "No players entered the quiz";
+			}
+			else{
+				int score = highScore.getPlayerScore();
+				int playerId = highScore.getPlayerId();
+				//GET FULL PLAYER DETAILS TO RETURN FROM PLAYER LIST
+				reply = "The winner was + player ID + playerName + with a score of " + score + ".";
+			}
+			
 			//remove the quiz from quizzes
 		}
 		else{
-			//quiz not found
+			//Quiz not found.
+			return reply;
 		}
 	}
+	return reply;
 }
 
 //Adds a quiz to the Quiz Game Server

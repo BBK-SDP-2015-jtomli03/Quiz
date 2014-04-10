@@ -28,7 +28,8 @@ public int addQuiz(Quiz quiz) throws RemoteException;
 *
 * @param the quiz to be removed's ID
 *
+*@return the winners details and score
 */
-void closeQuiz(int quizId) throws RemoteException;
+String closeQuiz(int quizId) throws RemoteException;
 	
 }
