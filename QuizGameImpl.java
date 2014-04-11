@@ -23,6 +23,18 @@ public String echo(String s) throws RemoteException {
 	return s;
 }
 
+
+//Checks if a player ID exists in the players list
+@Override
+public boolean checkPlayerId(int playerId){
+	for(Player player : players){
+		if(player.getId() == playerId){
+			return true;
+		}
+	}
+	return false;
+}
+
 private int getUniqueId(){
 	int returnId = this.uniqueId + 1;
 	this.uniqueId = returnId;

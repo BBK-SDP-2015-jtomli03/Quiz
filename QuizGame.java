@@ -28,7 +28,7 @@ public int addQuiz(Quiz quiz) throws RemoteException;
 *
 * @param the quiz to be removed's ID
 *
-*@return the winners details and score
+* @return the winners details and score
 */
 String closeQuiz(int quizId) throws RemoteException;
 
@@ -37,8 +37,17 @@ String closeQuiz(int quizId) throws RemoteException;
 *
 * @param the players username
 *
-*@return int a unique player ID
+* @return int a unique player ID
 */
 int addPlayer(String userName) throws RemoteException;
+
+/**
+* Checks if a players ID is in the players list
+*
+* @param the players ID number
+*
+* @return boolean true if the ID exists, false if not
+*/
+boolean checkPlayerId(int playerId);
 	
 }

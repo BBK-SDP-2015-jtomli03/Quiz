@@ -28,6 +28,7 @@ private QuizGame launch() throws NotBoundException, MalformedURLException, Remot
 public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws RemoteException{
 		String userName = "", choice = "";
 		int playerId = 0;
+		boolean correctId;
 		System.out.println("");
 		System.out.println("Are you a returning player? Y or N.");
 		choice = System.console().readLine();
@@ -36,6 +37,8 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			System.out.println("");
 			System.out.println("Please key in your player ID number.");
 			playerId = Integer.parseInt(System.console().readLine());
+			correctId = quizGame.checkPlayerId(playerId);
+			//if false return to menu
 			break;
 
 			case "N":
@@ -53,7 +56,9 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			newPlayerClient.Options(newPlayerClient, quizGame);
 			break;
 
-			//method to input player ID and get a list of quizzes
+			//method to get a list of quizzes
+			//List<Quiz> quizzes = getQuizList();
+
 			//choose quiz
 			//play quiz
 			//submit quiz
