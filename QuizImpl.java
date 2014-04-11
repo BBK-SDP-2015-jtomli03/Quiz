@@ -30,6 +30,7 @@ public Score getHighScore(){
 		for(Score score : scores){
 			if(score.getPlayerScore() > max){
 				maxScore = score;
+				max = score.getPlayerScore();
 			}
 		}
 	return maxScore;

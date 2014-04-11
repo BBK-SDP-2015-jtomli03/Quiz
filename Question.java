@@ -16,4 +16,16 @@ void addCorrectAnswer(String answer);
 *@param the answer to be added
 */
 void addAnswer(String answer);	
+
+/**
+* Shows which answer from the list of choices is correct
+*
+*@return the numbered position of the correct answer as printed on screen
+*/
+int getCorrectAnswer();
+
+/**
+* Prints the possible answers to the question
+*/
+void printAnswers();
 }

@@ -12,12 +12,12 @@ public QuestionImpl(String question){
 
 //Adds the correct answer randomly to the list of answers, 
 //then adds one to the randomly obtained integer 'correctAnswer' so that this corresponds to the order that 
-//the answers are then presented to the user
+//the answers are then presented to the user to make scoring easier.
 @Override
 public void addCorrectAnswer(String answer){
 	correctAnswer = (int)(Math.random()*4);
 	answers[correctAnswer] = answer;
-	correctAnswer = correctAnswer + 1;
+	correctAnswer = correctAnswer + 1; 
 }
 
 //Adds the incorrect answers to the list
@@ -35,5 +35,22 @@ public void addAnswer(String answer){
 		}
 	}
 }
+
+//Gets the correct answer for the question
+@Override
+public int getCorrectAnswer(){
+	return correctAnswer;
+}
+
+//prints a list of answers
+public void printAnswers(){
+	int  count = 1;
+	for(String answer: answers){
+			System.out.println(count + ") " + answer);
+			count = count + 1;
+
+	}
+}
+
 	
 }
