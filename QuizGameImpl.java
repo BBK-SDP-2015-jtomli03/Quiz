@@ -36,13 +36,22 @@ public String closeQuiz(int quizId) throws RemoteException{
 			else{
 				int score = highScore.getPlayerScore();
 				int playerId = highScore.getPlayerId();
-				//GET FULL PLAYER DETAILS TO RETURN FROM PLAYER LIST
-				reply = "The winner was; " + playerId + " + playerName + with a score of " + score + ".";
+				reply = "The winner was; " + playerId + getPlayerDetails(playerId) + " with a score of " + score + ".";
 			}
 			quizzes.remove(quiz);
 		}
 	}
 	return reply;
+}
+
+//Gets a players details by their ID
+private String getPlayerDetails(int playerId){
+	for(Player player : players){
+		if(player.getId() == playerId){
+			return player.getUserName();
+		}
+	}
+	return "Player details not found.";
 }
 
 //Adds a quiz to the Quiz Game Server

@@ -2,7 +2,7 @@ public class PlayerImpl implements Player{
 	String userName = "";
 	int playerId = 0;
 
-	public Player(String userName){
+	public PlayerImpl(String userName){
 		this.userName = userName;
 	}
 
@@ -15,7 +15,7 @@ public int getId(){
 //Sets the player ID number
 @Override
 public void setId(int id){
-	this.id = playerId;
+	this.playerId = id;
 }
 
 //gets the userName
