@@ -42,9 +42,9 @@ public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws Remote
 			System.out.println("");
 			System.out.println("To set up a player account please enter your username, followed by the return key.");
 			userName = System.console().readLine();
-			//method to add player to players list and return the player ID
+			playerId = quizGame.addPlayer(userName);
 			System.out.println("");
-			System.out.println("Your username is " + userName + " and your player ID number = " + playerId + " (Please keep this safe as you will need this to play future quizzes.)");
+			System.out.println("Your username is " + userName + " and your player ID number = " + playerId + " (Please keep this safe as you will need it to play future quizzes.)");
 			break;
 
 			default:

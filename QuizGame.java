@@ -35,10 +35,10 @@ String closeQuiz(int quizId) throws RemoteException;
 /**
 * Adds a player to the Quiz Game Server list of players
 *
-* @param the player to be added
+* @param the players username
 *
 *@return int a unique player ID
 */
-int addPlayer(Player player) throws RemoteException;
+int addPlayer(String userName) throws RemoteException;
 	
 }
