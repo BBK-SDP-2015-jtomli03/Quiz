@@ -37,14 +37,9 @@ public String closeQuiz(int quizId) throws RemoteException{
 				int score = highScore.getPlayerScore();
 				int playerId = highScore.getPlayerId();
 				//GET FULL PLAYER DETAILS TO RETURN FROM PLAYER LIST
-				reply = "The winner was + player ID + playerName + with a score of " + score + ".";
+				reply = "The winner was; " + playerId + " + playerName + with a score of " + score + ".";
 			}
-			
-			//remove the quiz from quizzes
-		}
-		else{
-			//Quiz not found.
-			return reply;
+			quizzes.remove(quiz);
 		}
 	}
 	return reply;
@@ -57,6 +52,7 @@ public int addQuiz(Quiz quiz) throws RemoteException{
 	quizzes.add(quiz);
 	return quiz.getId();
 }
+
 
 /**
 * Returns a unique quiz ID

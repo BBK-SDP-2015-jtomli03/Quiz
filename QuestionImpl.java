@@ -43,6 +43,7 @@ public int getCorrectAnswer(){
 }
 
 //prints a list of answers
+@Override
 public void printAnswers(){
 	int  count = 1;
 	for(String answer: answers){
