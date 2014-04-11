@@ -9,7 +9,7 @@ import java.util.List;
 
 public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private List<Quiz> quizzes = new ArrayList<Quiz>();
-	//private List<Player> player = new ArrayList<Player>();
+	private List<Player> players = new ArrayList<Player>();
 
 	public QuizGameImpl() throws RemoteException{
 		super();
@@ -68,6 +68,34 @@ public int addQuiz(Quiz quiz) throws RemoteException{
 			for(Quiz quiz : quizzes){
 				if(quiz.getId() > max){
 					max = quiz.getId();
+				}
+			}
+			return max + 1;
+		}
+	}
+
+//Adds a player to the Quiz Game Server
+@Override
+public int addPlayer(Player player) throws RemoteException{
+	player.setId(getNewPlayerId());
+	players.add(player);
+	return player.getId();
+}
+
+/**
+* Returns a unique player ID
+*
+* @return int a unique player ID
+*/
+	private int getNewPlayerId(){
+		int max = 0;
+		if (players.isEmpty()){
+			return 1;
+		}
+		else{
+			for(Player player : players){
+				if(player.getId() > max){
+					max = player.getId();
 				}
 			}
 			return max + 1;

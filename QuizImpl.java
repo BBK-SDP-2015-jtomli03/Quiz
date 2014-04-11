@@ -13,10 +13,6 @@ public QuizImpl(String quizName){
 	this.quizName = quizName;
 }
 
-public QuizImpl(int id, String quizName){
-	this.id = id;
-	this.quizName = quizName;
-}
 
 //Returns the highest score
 @Override
@@ -56,7 +52,5 @@ public void addQuestion(Question question){
 }
 
 
-
-//calculate highest score
 
 }
