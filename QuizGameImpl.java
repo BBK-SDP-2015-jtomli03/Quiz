@@ -5,10 +5,11 @@ import java.rmi.RMISecurityManager;
 import java.rmi.Naming;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.List;
 
 public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
-	private List<Quiz> quizzes = new ArrayList<Quiz>();
+	private List<Quiz> quizzes = new CopyOnWriteArrayList<Quiz>();
 	private List<Player> players = new ArrayList<Player>();
 
 	public QuizGameImpl() throws RemoteException{
