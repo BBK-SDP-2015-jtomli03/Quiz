@@ -6,7 +6,7 @@ import java.rmi.Naming;
 import java.net.MalformedURLException;
 import java.io.Serializable;
 
-public class PlayerClientImpl implements Serializable, SetUpClient{
+public class PlayerClientImpl implements Serializable, PlayerClient{
 	
 	public PlayerClientImpl(){
 
@@ -25,7 +25,7 @@ private QuizGame launch() throws NotBoundException, MalformedURLException, Remot
 }
 
 @Override
-public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws RemoteException{
+public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws RemoteException{
 		String userName = "", choice = "";
 		int playerId = 0;
 		System.out.println("");
@@ -49,6 +49,8 @@ public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws Remote
 
 			default:
 			//return to start
+			System.out.println("Sorry I didn't understand that. Please try again. Make sure you use upper case. ");
+			newPlayerClient.Options(newPlayerClient, quizGame);
 			break;
 
 			//method to input player ID and get a list of quizzes
