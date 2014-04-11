@@ -24,19 +24,17 @@ public class SetUpClientImpl implements Serializable, SetUpClient{
 		return quizGame;
 }
 
-	public static void main (String[] args) throws NotBoundException, MalformedURLException, RemoteException{
-		SetUpClientImpl newSetUpClient = new SetUpClientImpl();
-		QuizGame quizGame = newSetUpClient.launch();
-
-
-		int choice = 0, quizId = 0;
+@Override
+public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws RemoteException{
+	int choice = 0, quizId = 0;
 		String quizName = "", quizQuestion = "", answer = "", quizComplete = "Y";
 		System.out.println("");
-		//System.out.println("*****Welcome to Quiz Master!*****");
 		System.out.println("");
 		System.out.println("If you want to CREATE a new quiz game then please press '1' followed by the return key.");
 		System.out.println("");
 		System.out.println("If you want to CLOSE a quiz game then please press '2' followed by the return key.");
+		System.out.println("");
+		System.out.println("If you want to QUIT QuizMaster then please press '3' followed by the return key.");
 		choice = Integer.parseInt(System.console().readLine());
 		System.out.println("");
 		switch (choice){
@@ -71,6 +69,7 @@ public class SetUpClientImpl implements Serializable, SetUpClient{
 				quizComplete = System.console().readLine();
 			}
 			System.out.println("Your quiz id number is; " + quizGame.addQuiz(quiz));
+			newSetUpClient.Options(newSetUpClient, quizGame);
 			break;
 			
 			case 2:
@@ -80,14 +79,24 @@ public class SetUpClientImpl implements Serializable, SetUpClient{
 			quizId = Integer.parseInt(System.console().readLine());
 			System.out.println(quizGame.closeQuiz(quizId));
 			System.out.println("");
-			System.out.println("*****THANKYOU - GOODBYE!*****");
+			System.out.println("Your quiz has now been closed. ");
+			newSetUpClient.Options(newSetUpClient, quizGame);
 			break;
-			
+
+			case 3:
+			System.out.println("*****THANKYOU - GOODBYE!*****");
+			//close thread
 			default:
-			//code to ask again
-
-
+			System.out.println("Sorry I didn't understand that. Please try again. ");
+			newSetUpClient.Options(newSetUpClient, quizGame);
 		}
+}
+
+	public static void main (String[] args) throws NotBoundException, MalformedURLException, RemoteException{
+		SetUpClientImpl newSetUpClient = new SetUpClientImpl();
+		QuizGame quizGame = newSetUpClient.launch();
+		newSetUpClient.Options(newSetUpClient, quizGame);
+		
 	}
 
 
