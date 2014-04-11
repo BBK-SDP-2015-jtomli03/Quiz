@@ -38,7 +38,10 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			System.out.println("Please key in your player ID number.");
 			playerId = Integer.parseInt(System.console().readLine());
 			correctId = quizGame.checkPlayerId(playerId);
-			//if false return to menu
+			if(!correctId){
+				System.out.println("This ID number does not exist. Please try again.");
+				newPlayerClient.Options(newPlayerClient, quizGame);
+			}
 			break;
 
 			case "N":
