@@ -78,7 +78,9 @@ public class SetUpClientImpl implements Serializable, SetUpClient{
 			System.out.println("");
 			System.out.println("Please enter the quiz ID number, followed by the return key;");
 			quizId = Integer.parseInt(System.console().readLine());
-			quizGame.closeQuiz(quizId);
+			System.out.println(quizGame.closeQuiz(quizId));
+			System.out.println("");
+			System.out.println("*****THANKYOU - GOODBYE!*****");
 			break;
 			
 			default:
