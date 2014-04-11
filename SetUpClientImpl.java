@@ -29,7 +29,6 @@ public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws Remote
 	int choice = 0, quizId = 0;
 		String quizName = "", quizQuestion = "", answer = "", quizComplete = "Y";
 		System.out.println("");
-		System.out.println("");
 		System.out.println("If you want to CREATE a new quiz game then please press '1' followed by the return key.");
 		System.out.println("");
 		System.out.println("If you want to CLOSE a quiz game then please press '2' followed by the return key.");
