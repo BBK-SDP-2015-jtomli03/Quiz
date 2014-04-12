@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.rmi.RemoteException;
+
 
 public class QuizImpl implements Quiz, Serializable{
 	private int id = 0;
@@ -9,7 +11,7 @@ public class QuizImpl implements Quiz, Serializable{
 	private List<Score> scores = new ArrayList<Score>();
 
 
-public QuizImpl(String quizName){
+public QuizImpl(String quizName) throws RemoteException{
 	this.quizName = quizName;
 }
 
@@ -50,6 +52,7 @@ public void setId(int id){
 public void addQuestion(Question question){
 	questions.add(question);
 }
+
 
 
 

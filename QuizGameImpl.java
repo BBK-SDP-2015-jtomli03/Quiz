@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.List;
+import java.lang.Object;
 
 public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private List<Quiz> quizzes = new CopyOnWriteArrayList<Quiz>();
@@ -24,9 +25,17 @@ public String echo(String s) throws RemoteException {
 }
 
 
+//Returns a copy of the list of current quizzes as an Array
+@Override
+public Quiz[] getQuizList() throws RemoteException{
+	Quiz[] clonedQuizList = quizzes.toArray(new Quiz[0]);
+	return clonedQuizList;
+}
+
+
 //Checks if a player ID exists in the players list
 @Override
-public boolean checkPlayerId(int playerId){
+public boolean checkPlayerId(int playerId) throws RemoteException{
 	for(Player player : players){
 		if(player.getId() == playerId){
 			return true;

@@ -54,20 +54,24 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			break;
 
 			default:
-			//return to start
 			System.out.println("Sorry I didn't understand that. Please try again. Make sure you use upper case. ");
 			newPlayerClient.Options(newPlayerClient, quizGame);
 			break;
-
+		}
 			//method to get a list of quizzes
-			//List<Quiz> quizzes = getQuizList();
+			Quiz[] quizzes = quizGame.getQuizList();
+			System.out.println("Please choose a quiz to play by keying in its Quiz Number;");
+			for(Quiz quiz : quizzes){
+				System.out.println("Quiz Number " + quiz.getId() + "; " + "quizname");
+			}
+			
 
 			//choose quiz
 			//play quiz
 			//submit quiz
 			//score returned
 			//?play another quiz/quit
-		}
+		
 	}
 
 public static void main (String[] args) throws NotBoundException, MalformedURLException, RemoteException{

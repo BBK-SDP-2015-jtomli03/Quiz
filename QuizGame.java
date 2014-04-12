@@ -21,7 +21,7 @@ public String echo(String s) throws RemoteException;
 *
 * @return int a unique quiz ID
 */
-public int addQuiz(Quiz quiz) throws RemoteException;
+int addQuiz(Quiz quiz) throws RemoteException;
 
 /**
 * Closes a quiz and removes from the Quiz Game Server list of quizzes
@@ -48,6 +48,13 @@ int addPlayer(String userName) throws RemoteException;
 *
 * @return boolean true if the ID exists, false if not
 */
-boolean checkPlayerId(int playerId);
+boolean checkPlayerId(int playerId) throws RemoteException;
+
+/**
+* Returns a copy of the quizzes list as an array of type Quiz
+*
+* @return Quiz[] an array of the quiz list
+*/
+Quiz[] getQuizList() throws RemoteException;
 	
 }
