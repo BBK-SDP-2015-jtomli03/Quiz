@@ -95,4 +95,19 @@ public List<Question> getQuestions(){
 	return questions;
 }
 
+@Override
+public void addScore(Score score){
+	scores.add(score);
 }
+
+}
+
+
+
+
+
+
+
+
+
+

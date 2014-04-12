@@ -5,6 +5,7 @@ import java.rmi.Remote;
 import java.rmi.Naming;
 import java.net.MalformedURLException;
 import java.io.Serializable;
+import java.util.List;
 
 public class PlayerClientImpl implements Serializable, PlayerClient{
 	
@@ -27,7 +28,7 @@ private QuizGame launch() throws NotBoundException, MalformedURLException, Remot
 @Override
 public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws RemoteException{
 		String userName = "", choice = "";
-		int playerId = 0, quizNumber = 0, answer = 0, score = 0;
+		int playerId = 0, quizNumber = 0, answer = 0, score = 0, count = 0;
 		boolean correctId;
 		System.out.println("");
 		System.out.println("Are you a returning player? Y or N.");
@@ -85,13 +86,18 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 		}		
 		System.out.println("");
 		System.out.println("***You have completed the quiz! You scored " + score + "/" + quizToPlay.getNumOfQuestions() + " ***");		
-				//calculate score + add to quiz using method + score constructor
+		Score playerScore = new ScoreImpl(playerId, score);
+		List<ScoreImpl> topResults = quizGame.sendResult(playerScore, quizToPlay.getId());
+		System.out.println("");
+		System.out.println("The top 5 scores are; ");
+		System.out.println("");	
+		for(ScoreImpl highScore : topResults){
+			System.out.println(count + ". " + quizGame.getPlayerDetails(playerId) + "   " + highScore.getPlayerScore() + " points.");
+		}
 		
 
 			
-			//play quiz
-			//submit quiz
-			//score returned
+			
 			//?play another quiz/quit
 		
 	}

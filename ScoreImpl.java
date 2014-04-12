@@ -1,7 +1,8 @@
 import java.lang.Comparable;
 import java.lang.ClassCastException;
+import java.io.Serializable;
 
-public class ScoreImpl implements Score, Comparable<Score>{
+public class ScoreImpl implements Score, Comparable<Score>, Serializable{
 	int playerId = 0;
 	int playerScore = 0;
 

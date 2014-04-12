@@ -11,7 +11,7 @@ import java.lang.Object;
 
 public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private List<Quiz> quizzes = new CopyOnWriteArrayList<Quiz>();
-	private List<Player> players = new ArrayList<Player>();
+	private List<Player> players = new CopyOnWriteArrayList<Player>();
 	private int uniqueId = 0;
 
 	public QuizGameImpl() throws RemoteException{
@@ -24,6 +24,23 @@ public String echo(String s) throws RemoteException {
 	return s;
 }
 
+@Override
+public List<ScoreImpl> sendResult(Score score, int quizId){
+	Quiz quiz = addQuizScore(score, quizId);
+	List<ScoreImpl> topScores = quiz.getTopScores();
+	return topScores;
+}
+
+
+public Quiz addQuizScore(Score score, int quizId){
+	for(Quiz quiz : quizzes){
+		if(quiz.getId() == quizId){
+			quiz.addScore(score);
+			return quiz;
+		}
+	}
+	return null;
+}
 
 //Returns a copy of the list of current quizzes as an Array
 @Override
@@ -80,7 +97,8 @@ public String closeQuiz(int quizId) throws RemoteException{
 }
 
 //Gets a players details by their ID
-private String getPlayerDetails(int playerId){
+@Override
+public String getPlayerDetails(int playerId){
 	for(Player player : players){
 		if(player.getId() == playerId){
 			return player.getUserName();

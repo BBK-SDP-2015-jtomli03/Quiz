@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.rmi.RemoteException;
+import java.lang.ClassCastException;
+import java.lang.UnsupportedOperationException;
 
 /**
 * Allows you to set up a quiz
@@ -67,6 +70,12 @@ List<Question> getQuestions();
 */
 List<ScoreImpl> getTopScores() throws ClassCastException, UnsupportedOperationException;
 
+/**
+* Adds a players Score (Score of variables int score and int playerId) to a quiz
+*
+* @param Score the Score to add 
+*/
+void addScore(Score score);
 }
 
 
