@@ -63,7 +63,7 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			System.out.println("Please choose a quiz to play by keying in its Quiz Number;");
 			System.out.println("");
 			for(Quiz quiz : quizzes){
-				System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName());
+				System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName() + " (Total number of questions = " + quiz.getNumOfQuestions()")");
 			}
 			
 
