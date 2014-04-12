@@ -6,21 +6,21 @@ public interface Question{
 /**
 * Adds the correct answer to the question object
 *
-*@param the answer to be added
+*@param String the answer to be added
 */
 void addCorrectAnswer(String answer);
 
 /**
 * Adds an incorrect answer to the question object
 *
-*@param the answer to be added
+*@param String the answer to be added
 */
 void addAnswer(String answer);	
 
 /**
 * Shows which answer from the list of choices is correct
 *
-*@return the numbered position of the correct answer as printed on screen
+*@return int the numbered position of the correct answer as printed on screen
 */
 int getCorrectAnswer();
 
@@ -28,4 +28,11 @@ int getCorrectAnswer();
 * Prints the possible answers to the question
 */
 void printAnswers();
+
+/**
+* Shows the question
+*
+*@return String the question
+*/
+String getQuestion();
 }

@@ -42,6 +42,11 @@ public int getCorrectAnswer(){
 	return correctAnswer;
 }
 
+@Override
+public String getQuestion(){
+	return question;
+}
+
 //prints a list of answers
 @Override
 public void printAnswers(){

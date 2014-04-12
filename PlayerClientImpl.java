@@ -71,7 +71,12 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			System.out.println("You have chosen to play " + quizToPlay.getQuizName() + "........GOOD LUCK!!");
 			System.out.println("");
 			for(Question question : quizToPlay.getQuestions()){
+				System.out.println(") " + question.getQuestion());
+				System.out.println("");
+				question.printAnswers();
 
+				//player to give answer
+				//calculate score
 			}
 
 			
