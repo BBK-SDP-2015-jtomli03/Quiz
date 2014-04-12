@@ -60,6 +60,13 @@ void setNumOfQuestions();
 */
 List<Question> getQuestions();
 
+/**
+* Gets the top scores of a quiz
+*
+* @return List<Score> the list of top scores
+*/
+List<Score> getTopScores();
+
 }
 
 

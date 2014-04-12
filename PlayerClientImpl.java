@@ -27,7 +27,7 @@ private QuizGame launch() throws NotBoundException, MalformedURLException, Remot
 @Override
 public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws RemoteException{
 		String userName = "", choice = "";
-		int playerId = 0, quizNumber = 0;
+		int playerId = 0, quizNumber = 0, answer = 0, score = 0;
 		boolean correctId;
 		System.out.println("");
 		System.out.println("Are you a returning player? Y or N.");
@@ -59,27 +59,34 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			newPlayerClient.Options(newPlayerClient, quizGame);
 			break;
 		}
-			//method to get a list of quizzes
-			Quiz[] quizzes = quizGame.getQuizList();
+	
+		Quiz[] quizzes = quizGame.getQuizList();
+		System.out.println("");
+		System.out.println("***Please choose a quiz to play by keying in its Quiz Number;***");
+		System.out.println("");
+		for(Quiz quiz : quizzes){
+			System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName() + " (Total number of questions = " + quiz.getNumOfQuestions() + ")");
+		}
+		quizNumber = Integer.parseInt(System.console().readLine());
+		Quiz quizToPlay = quizzes[quizNumber - 1]; // quizNumber - 1 corresponds to the place in the array where the quiz is stored
+		System.out.println("");
+		System.out.println("You have chosen to play " + quizToPlay.getQuizName() + "........GOOD LUCK!!");
+		for(Question question : quizToPlay.getQuestions()){
 			System.out.println("");
-			System.out.println("***Please choose a quiz to play by keying in its Quiz Number;***");
+			System.out.println(question.getQuestion());
 			System.out.println("");
-			for(Quiz quiz : quizzes){
-				System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName() + " (Total number of questions = " + quiz.getNumOfQuestions() + ")");
+			question.printAnswers();
+			System.out.println("");
+			System.out.print("Please key in your answer; ");
+			answer = Integer.parseInt(System.console().readLine());
+			if(answer == question.getCorrectAnswer()){
+				score = score + 1;
 			}
-			quizNumber = Integer.parseInt(System.console().readLine());
-			Quiz quizToPlay = quizzes[quizNumber - 1]; // quizNumber - 1 corresponds to the place in the array where the quiz is stored
-			System.out.println("");
-			System.out.println("You have chosen to play " + quizToPlay.getQuizName() + "........GOOD LUCK!!");
-			for(Question question : quizToPlay.getQuestions()){
-				System.out.println("");
-				System.out.println(question.getQuestion());
-				System.out.println("");
-				question.printAnswers();
-
-				//player to give answer
-				//calculate score
-			}
+		}		
+		System.out.println("");
+		System.out.println("***You have completed the quiz! You scored " + score + "/" + quizToPlay.getNumOfQuestions() + " ***");		
+				//calculate score + add to quiz using method + score constructor
+		
 
 			
 			//play quiz

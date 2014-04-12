@@ -1,10 +1,11 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparable;
 import java.rmi.RemoteException;
 
 
-public class QuizImpl implements Quiz, Serializable{
+public class QuizImpl implements Quiz, Serializable, Comparable{
 	private int id = 0;
 	private String quizName = ""; 
 	private int numOfQuestions = 0;
@@ -34,6 +35,12 @@ public Score getHighScore(){
 		}
 	return maxScore;
 	}
+}
+
+//Returns the top 5 scores
+@Override
+public List<Score> getTopScores(){
+
 }
 
 //Gets the quiz ID number
