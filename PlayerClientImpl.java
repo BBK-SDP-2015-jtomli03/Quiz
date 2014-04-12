@@ -50,7 +50,8 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			userName = System.console().readLine();
 			playerId = quizGame.addPlayer(userName);
 			System.out.println("");
-			System.out.println("Your username is " + userName + " and your player ID number = " + playerId + " **(Please keep this safe as you will need it to play future quizzes.)**");
+			System.out.println("Your username is " + userName + " and your player ID number = " + playerId);
+			System.out.println("**(Please keep this safe as you will need it to play future quizzes.)**");
 			break;
 
 			default:
@@ -70,8 +71,8 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			Quiz quizToPlay = quizzes[quizNumber - 1]; // quizNumber - 1 corresponds to the place in the array where the quiz is stored
 			System.out.println("");
 			System.out.println("You have chosen to play " + quizToPlay.getQuizName() + "........GOOD LUCK!!");
-			System.out.println("");
 			for(Question question : quizToPlay.getQuestions()){
+				System.out.println("");
 				System.out.println(question.getQuestion());
 				System.out.println("");
 				question.printAnswers();

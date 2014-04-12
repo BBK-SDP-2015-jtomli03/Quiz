@@ -26,7 +26,7 @@ public class SetUpClientImpl implements Serializable, SetUpClient{
 
 @Override
 public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws RemoteException{
-		int choice = 0, quizId = 0, count = 0;
+		int choice = 0, quizId = 0;
 		String quizName = "", quizQuestion = "", answer = "", quizComplete = "Y";
 		System.out.println("");
 		System.out.println("If you want to CREATE a new quiz game then please press '1' followed by the return key.");
@@ -48,15 +48,15 @@ public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws Remote
 			System.out.println("");
 			System.out.println("You will now be asked to type the questions and answers. Each question will have 4 multiple choice answers created by yourself."); 
 			System.out.println("You will be asked to type in the correct answer first. Quiz Master will randomly mix up the order of the correct answer with the other answers.");
-			for(count = 1; quizComplete.equalsIgnoreCase("Y"); count++){
+			for(int quNum = 1; quizComplete.equalsIgnoreCase("Y"); quNum++){
 				System.out.println("");
 				System.out.println("Please type a question;");
-				quizQuestion = "" + count + ")" + System.console().readLine();
+				quizQuestion = "Qu. " + quNum + ". " + System.console().readLine();
 				Question question = new QuestionImpl(quizQuestion);
 				System.out.println("Please type the CORRECT answer;");
 				answer = System.console().readLine();
 				question.addCorrectAnswer(answer);
-				for(count = 1; count < 4; count ++){
+				for(int count = 1; count < 4; count ++){
 					System.out.println("Please type in fake answer; " + count);
 					answer = System.console().readLine();
 					question.addAnswer(answer);
@@ -68,7 +68,7 @@ public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws Remote
 				quizComplete = System.console().readLine();
 			}
 			quiz.setNumOfQuestions();
-			System.out.println("Your quiz id number is; " + quizGame.addQuiz(quiz));
+			System.out.println("****Your quiz id number is; " + quizGame.addQuiz(quiz) + "****");
 			newSetUpClient.Options(newSetUpClient, quizGame);
 			break;
 			
