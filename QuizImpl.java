@@ -1,11 +1,14 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Comparable;
+import java.util.Collections;
 import java.rmi.RemoteException;
+import java.lang.ClassCastException;
+import java.lang.UnsupportedOperationException;
 
 
-public class QuizImpl implements Quiz, Serializable, Comparable{
+
+public class QuizImpl implements Quiz, Serializable{
 	private int id = 0;
 	private String quizName = ""; 
 	private int numOfQuestions = 0;
@@ -39,9 +42,18 @@ public Score getHighScore(){
 
 //Returns the top 5 scores
 @Override
-public List<Score> getTopScores(){
-
+public List<ScoreImpl> getTopScores() throws ClassCastException, UnsupportedOperationException{
+	List<ScoreImpl> scoresToSort = new ArrayList<ScoreImpl>();
+	for(Score score : scores){
+		ScoreImpl downCast = (ScoreImpl) score;
+		scoresToSort.add(downCast);
+	}
+	Collections.sort(scoresToSort);
+	List<ScoreImpl> topFive = scoresToSort.subList(0,4);
+	return topFive;
 }
+
+
 
 //Gets the quiz ID number
 @Override

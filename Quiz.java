@@ -65,7 +65,7 @@ List<Question> getQuestions();
 *
 * @return List<Score> the list of top scores
 */
-List<Score> getTopScores();
+List<ScoreImpl> getTopScores() throws ClassCastException, UnsupportedOperationException;
 
 }
 
