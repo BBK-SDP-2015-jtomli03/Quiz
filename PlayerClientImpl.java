@@ -50,7 +50,7 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			userName = System.console().readLine();
 			playerId = quizGame.addPlayer(userName);
 			System.out.println("");
-			System.out.println("Your username is " + userName + " and your player ID number = " + playerId + " (Please keep this safe as you will need it to play future quizzes.)");
+			System.out.println("Your username is " + userName + " and your player ID number = " + playerId + " **(Please keep this safe as you will need it to play future quizzes.)**");
 			break;
 
 			default:
@@ -60,18 +60,19 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 		}
 			//method to get a list of quizzes
 			Quiz[] quizzes = quizGame.getQuizList();
-			System.out.println("Please choose a quiz to play by keying in its Quiz Number;");
+			System.out.println("");
+			System.out.println("***Please choose a quiz to play by keying in its Quiz Number;***");
 			System.out.println("");
 			for(Quiz quiz : quizzes){
 				System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName() + " (Total number of questions = " + quiz.getNumOfQuestions() + ")");
 			}
 			quizNumber = Integer.parseInt(System.console().readLine());
-			Quiz quizToPlay = quizzes[quizNumber];
+			Quiz quizToPlay = quizzes[quizNumber - 1]; // quizNumber - 1 corresponds to the place in the array where the quiz is stored
 			System.out.println("");
 			System.out.println("You have chosen to play " + quizToPlay.getQuizName() + "........GOOD LUCK!!");
 			System.out.println("");
 			for(Question question : quizToPlay.getQuestions()){
-				System.out.println(") " + question.getQuestion());
+				System.out.println(question.getQuestion());
 				System.out.println("");
 				question.printAnswers();
 
