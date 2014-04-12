@@ -71,4 +71,9 @@ public void setNumOfQuestions(){
 	numOfQuestions = questions.size();
 }
 
+@Override
+public List<Question> getQuestions(){
+	return questions;
+}
+
 }

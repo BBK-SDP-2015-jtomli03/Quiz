@@ -51,6 +51,13 @@ int getNumOfQuestions();
 */
 void setNumOfQuestions();
 
+/**
+* Gets the questions for the quiz
+*
+* @return List<Question> the list of questions
+*/
+List<Question> getQuestions();
+
 }
 
 

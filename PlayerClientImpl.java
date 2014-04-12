@@ -27,7 +27,7 @@ private QuizGame launch() throws NotBoundException, MalformedURLException, Remot
 @Override
 public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws RemoteException{
 		String userName = "", choice = "";
-		int playerId = 0;
+		int playerId = 0, quizNumber = 0;
 		boolean correctId;
 		System.out.println("");
 		System.out.println("Are you a returning player? Y or N.");
@@ -63,11 +63,18 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			System.out.println("Please choose a quiz to play by keying in its Quiz Number;");
 			System.out.println("");
 			for(Quiz quiz : quizzes){
-				System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName() + " (Total number of questions = " + quiz.getNumOfQuestions()")");
+				System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName() + " (Total number of questions = " + quiz.getNumOfQuestions() + ")");
 			}
-			
+			quizNumber = Integer.parseInt(System.console().readLine());
+			Quiz quizToPlay = quizzes[quizNumber];
+			System.out.println("");
+			System.out.println("You have chosen to play " + quizToPlay.getQuizName() + "........GOOD LUCK!!");
+			System.out.println("");
+			for(Question question : quizToPlay.getQuestions()){
 
-			//choose quiz
+			}
+
+			
 			//play quiz
 			//submit quiz
 			//score returned
