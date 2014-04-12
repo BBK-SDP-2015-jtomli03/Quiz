@@ -67,6 +67,7 @@ public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws Remote
 				System.out.println("To finish creating the quiz type 'N'.");
 				quizComplete = System.console().readLine();
 			}
+			quiz.setNumOfQuestions();
 			System.out.println("Your quiz id number is; " + quizGame.addQuiz(quiz));
 			newSetUpClient.Options(newSetUpClient, quizGame);
 			break;

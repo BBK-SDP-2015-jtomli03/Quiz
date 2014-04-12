@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 public class QuizImpl implements Quiz, Serializable{
 	private int id = 0;
 	private String quizName = ""; 
+	private int numOfQuestions = 0;
 	private List<Question> questions = new ArrayList<Question>();
 	private List<Score> scores = new ArrayList<Score>();
 
@@ -54,9 +55,20 @@ public void addQuestion(Question question){
 }
 
 //get quiz name
+@Override
 public String getQuizName(){
 	return quizName;
 }
 
+//get number of questions
+@Override
+public int getNumOfQuestions(){
+	return numOfQuestions;
+}
+
+@Override
+public void setNumOfQuestions(){
+	numOfQuestions = questions.size();
+}
 
 }

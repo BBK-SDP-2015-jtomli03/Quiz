@@ -39,4 +39,32 @@ Score getHighScore();
 */
 String getQuizName();
 
+/**
+* Gets the total number of questions in the quiz
+*
+* @return int the number of questions
+*/
+int getNumOfQuestions();
+
+/**
+* Sets the total number of questions in the quiz
+*/
+void setNumOfQuestions();
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
