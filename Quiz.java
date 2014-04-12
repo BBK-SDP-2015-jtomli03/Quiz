@@ -30,6 +30,13 @@ void addQuestion(Question question);
 *
 * @return the Score with the highest player score
 */
-public Score getHighScore();
+Score getHighScore();
+
+/**
+* Gets the name of the quiz
+*
+* @return String the quiz name
+*/
+String getQuizName();
 
 }

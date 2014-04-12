@@ -53,7 +53,10 @@ public void addQuestion(Question question){
 	questions.add(question);
 }
 
-
+//get quiz name
+public String getQuizName(){
+	return quizName;
+}
 
 
 }

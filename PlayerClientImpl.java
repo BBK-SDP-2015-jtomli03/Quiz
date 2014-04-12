@@ -61,8 +61,9 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			//method to get a list of quizzes
 			Quiz[] quizzes = quizGame.getQuizList();
 			System.out.println("Please choose a quiz to play by keying in its Quiz Number;");
+			System.out.println("");
 			for(Quiz quiz : quizzes){
-				System.out.println("Quiz Number " + quiz.getId() + "; " + "quizname");
+				System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName());
 			}
 			
 
