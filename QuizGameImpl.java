@@ -13,6 +13,7 @@ import java.lang.ClassCastException;
 import java.lang.UnsupportedOperationException;
 import java.io.File;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -53,6 +54,29 @@ public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
        		}
        	}
 	}
+
+//write to file
+public void writeToFile(){
+	ObjectOutputStream output = null;
+	try{
+		output = new ObjectOutputStream(new BufferedInputStream(new FileInputStream(FILENAME)));
+		output.writeObject(quizzes);
+		output.writeObject(players);
+		output.writeObject(uniqueId);
+		
+	}catch(IOException ex){
+		ex.printStackTrace();
+	}finally{
+		try{
+			if(output != null){
+				output.flush();
+				output.close();
+			}
+       	}catch(IOException ex){
+       		ex.printStackTrace();   	
+		}
+	}
+}
 
 @Override
 public String echo(String s) throws RemoteException {
