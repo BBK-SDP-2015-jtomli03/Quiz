@@ -27,17 +27,30 @@ public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private int uniqueId = 0;
 
 	public QuizGameImpl() throws RemoteException{
+		ObjectInputStream input = null;
 		try{
 			if(new File(FILENAME).exists()){
         	
-        	ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(FILENAME)));
-        
-        	//don't forget to use .flush() for buffer
+        	input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(FILENAME)));
+        	quizzes = (List<Quiz>) input.readObject();
+        	players = (List<Player>) input.readObject();
+        	uniqueId = (int) input.readObject();
+        	
         	}
         }catch(FileNotFoundException ex){
        		ex.printStackTrace();
        	}catch(IOException ex){
        		ex.printStackTrace();
+       	}catch(ClassNotFoundException ex){
+       		ex.printStackTrace();
+       	}finally{
+       		try{
+       			if(input != null){
+       				input.close();
+       			}
+       		}catch(IOException ex){
+       			ex.printStackTrace();
+       		}
        	}
 	}
 
