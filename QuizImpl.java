@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.rmi.RemoteException;
 import java.lang.ClassCastException;
 import java.lang.UnsupportedOperationException;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 
@@ -40,17 +41,16 @@ public Score getHighScore(){
 	}
 }
 
-//Returns the top 5 scores
+//Returns an ordered list of scores
 @Override
-public List<ScoreImpl> getTopScores() throws ClassCastException, UnsupportedOperationException{
+public List<ScoreImpl> getOrderedScores() throws ClassCastException, UnsupportedOperationException{
 	List<ScoreImpl> scoresToSort = new ArrayList<ScoreImpl>();
 	for(Score score : scores){
 		ScoreImpl downCast = (ScoreImpl) score;
 		scoresToSort.add(downCast);
 	}
 	Collections.sort(scoresToSort);
-	List<ScoreImpl> topFive = scoresToSort.subList(0,4);
-	return topFive;
+	return scoresToSort;
 }
 
 

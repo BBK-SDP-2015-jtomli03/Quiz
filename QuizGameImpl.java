@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.List;
 import java.lang.Object;
+import java.lang.Comparable;
+import java.lang.ClassCastException;
+import java.lang.UnsupportedOperationException;
+
+
 
 public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private List<Quiz> quizzes = new CopyOnWriteArrayList<Quiz>();
@@ -15,7 +20,7 @@ public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private int uniqueId = 0;
 
 	public QuizGameImpl() throws RemoteException{
-		super();
+		
 	}
 
 @Override
@@ -25,17 +30,38 @@ public String echo(String s) throws RemoteException {
 }
 
 @Override
-public List<ScoreImpl> sendResult(Score score, int quizId){
-	Quiz quiz = addQuizScore(score, quizId);
-	List<ScoreImpl> topScores = quiz.getTopScores();
-	return topScores;
+public List<String> sendResult(Score score, int quizId) throws RemoteException, ClassCastException, UnsupportedOperationException{
+	addQuizScore(score, quizId);
+	List<String> topFive = getTopFiveScores(quizId);
+	return topFive;
 }
 
+private List<String> getTopFiveScores(int quizId) throws RemoteException{
+	int count = 1;
+	List<ScoreImpl> orderedScores = getQuiz(quizId).getOrderedScores();
+	List<String> topFive = new CopyOnWriteArrayList<String>();
+		for(ScoreImpl score : orderedScores){
+			if(count < 6){
+				topFive.add(count + ".   " + "Player: " + score.getPlayerId() + "   " + getPlayerDetails(score.getPlayerId()) + "   Score: " + score.getPlayerScore());
+			}
+			else{
+				return topFive;
+			}
+		}
+	return topFive;
+}
 
-public Quiz addQuizScore(Score score, int quizId){
+public void addQuizScore(Score score, int quizId){
 	for(Quiz quiz : quizzes){
 		if(quiz.getId() == quizId){
 			quiz.addScore(score);
+		}
+	}
+}
+
+private Quiz getQuiz(int quizId){
+	for(Quiz quiz : quizzes){
+		if(quiz.getId() == quizId){
 			return quiz;
 		}
 	}
@@ -98,7 +124,7 @@ public String closeQuiz(int quizId) throws RemoteException{
 
 //Gets a players details by their ID
 @Override
-public String getPlayerDetails(int playerId){
+public String getPlayerDetails(int playerId) throws RemoteException{
 	for(Player player : players){
 		if(player.getId() == playerId){
 			return player.getUserName();

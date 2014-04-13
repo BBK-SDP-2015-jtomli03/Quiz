@@ -68,7 +68,7 @@ List<Question> getQuestions();
 *
 * @return List<Score> the list of top scores
 */
-List<ScoreImpl> getTopScores() throws ClassCastException, UnsupportedOperationException;
+List<ScoreImpl> getOrderedScores() throws ClassCastException, UnsupportedOperationException;
 
 /**
 * Adds a players Score (Score of variables int score and int playerId) to a quiz
@@ -76,6 +76,7 @@ List<ScoreImpl> getTopScores() throws ClassCastException, UnsupportedOperationEx
 * @param Score the Score to add 
 */
 void addScore(Score score);
+
 }
 
 

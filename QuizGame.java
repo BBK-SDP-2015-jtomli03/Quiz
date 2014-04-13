@@ -1,5 +1,7 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.lang.ClassCastException;
+import java.lang.UnsupportedOperationException;
 import java.util.*;
 
 /**
@@ -58,14 +60,14 @@ boolean checkPlayerId(int playerId) throws RemoteException;
 Quiz[] getQuizList() throws RemoteException;
 
 /**
-* Returns a quiz result to the server and returns the top scores of the quiz
+* Returns a quiz result to the server and returns the top scores and player details of the quiz
 *
 * @param Score the players Score (Score has the variables int playerScore and int playerId)
 * @param int the ID of the quiz to which the result is to be added
 *
-* @return List<ScoreImpl> a list of the top scores for the quiz just played
+* @return List<String>  a list of the top scores with player details for the quiz just played
 */
-List<ScoreImpl> sendResult(Score score, int quizId);
+List<String> sendResult(Score score, int quizId) throws RemoteException, ClassCastException, UnsupportedOperationException;
 
 /**
 * Gets a players details from their ID number
@@ -74,7 +76,7 @@ List<ScoreImpl> sendResult(Score score, int quizId);
 *
 * @return String the players details
 */
-String getPlayerDetails(int playerId);	
+String getPlayerDetails(int playerId) throws RemoteException;	
 }
 
 

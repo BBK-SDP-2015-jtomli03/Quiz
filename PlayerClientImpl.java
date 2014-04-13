@@ -6,6 +6,8 @@ import java.rmi.Naming;
 import java.net.MalformedURLException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ArrayList;
+import java.lang.NumberFormatException;
 
 public class PlayerClientImpl implements Serializable, PlayerClient{
 	
@@ -28,7 +30,7 @@ private QuizGame launch() throws NotBoundException, MalformedURLException, Remot
 @Override
 public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws RemoteException{
 		String userName = "", choice = "";
-		int playerId = 0, quizNumber = 0, answer = 0, score = 0, count = 0;
+		int playerId = 0, quizNumber = 0, answer = 0, score = 0, count = 1;
 		boolean correctId;
 		System.out.println("");
 		System.out.println("Are you a returning player? Y or N.");
@@ -69,7 +71,7 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName() + " (Total number of questions = " + quiz.getNumOfQuestions() + ")");
 		}
 		quizNumber = Integer.parseInt(System.console().readLine());
-		Quiz quizToPlay = quizzes[quizNumber - 1]; // quizNumber - 1 corresponds to the place in the array where the quiz is stored
+		Quiz quizToPlay = getQuizToPlay(quizzes, quizNumber);
 		System.out.println("");
 		System.out.println("You have chosen to play " + quizToPlay.getQuizName() + "........GOOD LUCK!!");
 		for(Question question : quizToPlay.getQuestions()){
@@ -79,7 +81,7 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 			question.printAnswers();
 			System.out.println("");
 			System.out.print("Please key in your answer; ");
-			answer = Integer.parseInt(System.console().readLine());
+			answer = Integer.parseInt(System.console().readLine()); //****try and catch NumberFormatException;
 			if(answer == question.getCorrectAnswer()){
 				score = score + 1;
 			}
@@ -87,14 +89,14 @@ public void Options(PlayerClient newPlayerClient, QuizGame quizGame) throws Remo
 		System.out.println("");
 		System.out.println("***You have completed the quiz! You scored " + score + "/" + quizToPlay.getNumOfQuestions() + " ***");		
 		Score playerScore = new ScoreImpl(playerId, score);
-		List<ScoreImpl> topResults = quizGame.sendResult(playerScore, quizToPlay.getId());
+		List<String> topFive = quizGame.sendResult(playerScore, quizToPlay.getId());
 		System.out.println("");
-		System.out.println("The top 5 scores are; ");
+		System.out.println("The top scores are; ");
 		System.out.println("");	
-		for(ScoreImpl highScore : topResults){
-			System.out.println(count + ". " + quizGame.getPlayerDetails(playerId) + "   " + highScore.getPlayerScore() + " points.");
+		for(String result : topFive){
+			System.out.println(result);
 		}
-		
+	
 
 			
 			
@@ -109,5 +111,25 @@ public static void main (String[] args) throws NotBoundException, MalformedURLEx
 		
 	}
 
+	private Quiz getQuizToPlay(Quiz[] quizzes, int quizNumber){
+		for(Quiz quiz : quizzes){
+			if(quiz.getId() == quizNumber){
+				return quiz;
+			}
+		}
+		return null;
+	}
+
+
+
 
 }
+
+
+
+
+
+
+
+
+

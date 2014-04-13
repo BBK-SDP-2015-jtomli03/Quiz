@@ -1,4 +1,3 @@
-import java.lang.Comparable;
 import java.lang.ClassCastException;
 import java.io.Serializable;
 
@@ -29,7 +28,7 @@ public class ScoreImpl implements Score, Comparable<Score>, Serializable{
 		if(this.getPlayerScore() == score.getPlayerScore()){
 			return 0;
 		}
-		else if(this.getPlayerScore() < score.getPlayerScore()){
+		else if(this.getPlayerScore() > score.getPlayerScore()){
 			return -1;
 		}
 		else{
