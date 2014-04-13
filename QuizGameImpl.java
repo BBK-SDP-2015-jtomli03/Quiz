@@ -11,16 +11,34 @@ import java.lang.Object;
 import java.lang.Comparable;
 import java.lang.ClassCastException;
 import java.lang.UnsupportedOperationException;
+import java.io.File;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 
 
 public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
+	private static final String FILENAME = "QuizMaster.txt";
 	private List<Quiz> quizzes = new CopyOnWriteArrayList<Quiz>();
 	private List<Player> players = new CopyOnWriteArrayList<Player>();
 	private int uniqueId = 0;
 
 	public QuizGameImpl() throws RemoteException{
-		
+		try{
+			if(new File(FILENAME).exists()){
+        	
+        	ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(FILENAME)));
+        
+        	//don't forget to use .flush() for buffer
+        	}
+        }catch(FileNotFoundException ex){
+       		ex.printStackTrace();
+       	}catch(IOException ex){
+       		ex.printStackTrace();
+       	}
 	}
 
 @Override
@@ -166,8 +184,12 @@ private void launch(){
 
 //Main method
 	public static void main (String[] args){
-		QuizGameImpl quizGame = new QuizGameImpl();
-		quizGame.launch();
+		try{
+			QuizGameImpl quizGame = new QuizGameImpl();
+			quizGame.launch();
+		}catch(RemoteException ex){
+			ex.printStackTrace();
+		}
 
 	}
 	
