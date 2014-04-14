@@ -40,19 +40,6 @@ public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
     	}	
     }
 
-/**	public QuizGameImpl() throws RemoteException{
-			if(new File(FILENAME).exists()){	
-				getData();
-			}
-			else{
-				try{
-					File file = new File (FILENAME);
-					file.createNewFile();
-				}catch(IOException ex){
-					ex.printStackTrace();
-				}
-			}
-    }*/
 
 private void getData(){
 	ObjectInputStream input = null;
@@ -184,24 +171,17 @@ public int addPlayer(String userName) throws RemoteException{
 
 
 @Override
-public String closeQuiz(int quizId) throws RemoteException{
-	String reply = "Quiz not found.";
+public List<ScoreImpl> closeQuiz(int quizId) throws RemoteException{
+	List<ScoreImpl> highScores = null;
 	for(Quiz quiz: quizzes){
 		if(quiz.getId() == quizId){
-			Score highScore = quiz.getHighScore();
-			if(highScore == null){
-				reply = "No players entered the quiz";
-			}
-			else{
-				int score = highScore.getPlayerScore();
-				int playerId = highScore.getPlayerId();
-				reply = "The winner was; " + playerId + getPlayerDetails(playerId) + " with a score of " + score + ".";
-			}
+			highScores = quiz.getHighScore();
 			quizzes.remove(quiz);
 			writeToFile();
+			return highScores;
 		}
 	}
-	return reply;
+	return highScores;
 }
 
 //Gets a players details by their ID

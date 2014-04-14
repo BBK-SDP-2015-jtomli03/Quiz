@@ -1,3 +1,4 @@
+import java.util.List;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.NotBoundException;
@@ -75,8 +76,19 @@ public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws Remote
 			System.out.println("*****You have chosen to close a quiz.*****");
 			System.out.println("");
 			System.out.println("Please enter the quiz ID number, followed by the return key;");
-			quizId = Integer.parseInt(System.console().readLine());
-			System.out.println(quizGame.closeQuiz(quizId));
+			quizId = Integer.parseInt(System.console().readLine());			
+			List<ScoreImpl> topScores = quizGame.closeQuiz(quizId);
+			String reply = "";
+			if(topScores.isEmpty()){
+				reply = "No players entered the quiz";
+			}
+			else{
+				System.out.println("The winner(s); ");
+				for(Score score : topScores){
+					int playerId = score.getPlayerId();
+					reply = playerId + "  " + quizGame.getPlayerDetails(playerId) + " with a score of " + score.getPlayerScore() + ".";
+				}
+			}
 			System.out.println("");
 			System.out.println("Your quiz has now been closed. ");
 			newSetUpClient.Options(newSetUpClient, quizGame);

@@ -33,9 +33,9 @@ void addQuestion(Question question);
 /**
 * Gets the highest score of the quiz which includes the players id for that score
 *
-* @return the Score with the highest player score
+* @return List<ScoreImpl> with the highest score (possibly plural if more than one player has the same top score)
 */
-Score getHighScore();
+List<ScoreImpl> getHighScore();
 
 /**
 * Gets the name of the quiz

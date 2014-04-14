@@ -30,9 +30,9 @@ int addQuiz(Quiz quiz) throws RemoteException;
 *
 * @param int the quiz to be removed's ID
 *
-* @return String the winners details and score
+* @return List<ScoreImpl>  the winners details and score
 */
-String closeQuiz(int quizId) throws RemoteException;
+List<ScoreImpl>  closeQuiz(int quizId) throws RemoteException;
 
 /**
 * Adds a player to the Quiz Game Server list of players
