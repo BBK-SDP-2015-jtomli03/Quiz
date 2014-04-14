@@ -110,6 +110,7 @@ private List<String> getTopFiveScores(int quizId) throws RemoteException{
 		for(ScoreImpl score : orderedScores){
 			if(count < 6){
 				topFive.add(count + ".   " + "Player: " + score.getPlayerId() + "   " + getPlayerDetails(score.getPlayerId()) + "   Score: " + score.getPlayerScore());
+				count = count + 1;
 			}
 			else{
 				return topFive;
