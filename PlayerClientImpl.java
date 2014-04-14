@@ -36,7 +36,7 @@ private QuizGame launch() throws NotBoundException, MalformedURLException, Remot
 */ 
 private int Options(QuizGame quizGame) throws RemoteException{
 		int playerId = 0;
-		boolean optionChosen = true;
+		boolean optionChosen = false;
 	while(!optionChosen){
 		System.out.println("Are you a returning player? Y or N.");
 		String choice = System.console().readLine();
@@ -149,11 +149,9 @@ private boolean playAgain(){
 public static void main (String[] args) throws NotBoundException, MalformedURLException, RemoteException{
 	PlayerClientImpl newPlayerClient = new PlayerClientImpl();
 	QuizGame quizGame = newPlayerClient.launch();
-	System.out.println("");
 	int playerId = newPlayerClient.Options(quizGame);
 	Quiz[] quizzes = quizGame.getQuizList();
-		
-		boolean play = true;
+	boolean play = true;
 		while(play){
 			System.out.println("");
 			Quiz quizToPlay = newPlayerClient.chooseQuiz(quizzes);

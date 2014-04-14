@@ -31,25 +31,38 @@ public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private int uniqueId = 0;
 
 	public QuizGameImpl() throws RemoteException{
-			if(!new File(FILENAME).exists()){
-				System.out.println("QuizMaster file created.");
+		try{	
+			if(!new File(FILENAME).createNewFile()){	
+				getData();
+			}
+		}catch(IOException ex){
+       		ex.printStackTrace();
+    	}	
+    }
+
+/**	public QuizGameImpl() throws RemoteException{
+			if(new File(FILENAME).exists()){	
+				getData();
 			}
 			else{
-				getData();
-			}	
-    }
+				try{
+					File file = new File (FILENAME);
+					file.createNewFile();
+				}catch(IOException ex){
+					ex.printStackTrace();
+				}
+			}
+    }*/
 
 private void getData(){
 	ObjectInputStream input = null;
 	try{ 	
        	input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(FILENAME)));
-       	while(input.available() > 0){
        	quizzes = (List<Quiz>) input.readObject();
        	players = (List<Player>) input.readObject();
-       	int uniqueId = input.readInt();
-       	}
+       	uniqueId = (int) input.readObject();
     }catch(EOFException ex){
- 		System.out.println("EOFException in getData().");
+ 		System.out.println("EOFException in getData() - expected - empty file.");
     }catch(FileNotFoundException ex){
        	ex.printStackTrace();
     }catch(IOException ex){
@@ -74,7 +87,7 @@ private void writeToFile(){
 		output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(FILENAME, false)));
 		output.writeObject(quizzes);
 		output.writeObject(players);
-		output.writeInt(uniqueId);
+		output.writeObject(uniqueId);
 		output.flush();
 	}catch(IOException ex){
 		ex.printStackTrace();
@@ -207,6 +220,7 @@ public String getPlayerDetails(int playerId) throws RemoteException{
 public int addQuiz(Quiz quiz) throws RemoteException{
 	quiz.setId(getUniqueId());
 	quizzes.add(quiz);
+	writeToFile();
 	return quiz.getId();
 }
 
