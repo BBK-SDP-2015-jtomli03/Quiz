@@ -1,4 +1,6 @@
-public class PlayerImpl implements Player{
+import java.io.Serializable;
+
+public class PlayerImpl implements Player, Serializable{
 	String userName = "";
 	int playerId = 0;
 

@@ -11,11 +11,14 @@ import java.lang.Object;
 import java.lang.Comparable;
 import java.lang.ClassCastException;
 import java.lang.UnsupportedOperationException;
+import java.io.EOFException;
 import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
@@ -28,48 +31,56 @@ public class QuizGameImpl extends UnicastRemoteObject implements QuizGame{
 	private int uniqueId = 0;
 
 	public QuizGameImpl() throws RemoteException{
-		ObjectInputStream input = null;
-		try{
-			if(new File(FILENAME).exists()){
-        	
-        	input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(FILENAME)));
-        	quizzes = (List<Quiz>) input.readObject();
-        	players = (List<Player>) input.readObject();
-        	uniqueId = (int) input.readObject();
-        	
-        	}
-        }catch(FileNotFoundException ex){
-       		ex.printStackTrace();
+			if(!new File(FILENAME).exists()){
+				System.out.println("QuizMaster file created.");
+			}
+			else{
+				getData();
+			}	
+    }
+
+private void getData(){
+	ObjectInputStream input = null;
+	try{ 	
+       	input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(FILENAME)));
+       	while(input.available() > 0){
+       	quizzes = (List<Quiz>) input.readObject();
+       	players = (List<Player>) input.readObject();
+       	int uniqueId = input.readInt();
+       	}
+    }catch(EOFException ex){
+ 		System.out.println("EOFException in getData().");
+    }catch(FileNotFoundException ex){
+       	ex.printStackTrace();
+    }catch(IOException ex){
+       	ex.printStackTrace();
+    }catch(ClassNotFoundException ex){
+       	ex.printStackTrace();
+    }finally{
+       	try{
+       		if(input != null){
+       			input.close();
+       		}
        	}catch(IOException ex){
        		ex.printStackTrace();
-       	}catch(ClassNotFoundException ex){
-       		ex.printStackTrace();
-       	}finally{
-       		try{
-       			if(input != null){
-       				input.close();
-       			}
-       		}catch(IOException ex){
-       			ex.printStackTrace();
-       		}
        	}
-	}
+    }
+}
 
 //write to file
-public void writeToFile(){
+private void writeToFile(){
 	ObjectOutputStream output = null;
 	try{
-		output = new ObjectOutputStream(new BufferedInputStream(new FileInputStream(FILENAME)));
+		output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(FILENAME, false)));
 		output.writeObject(quizzes);
 		output.writeObject(players);
-		output.writeObject(uniqueId);
-		
+		output.writeInt(uniqueId);
+		output.flush();
 	}catch(IOException ex){
 		ex.printStackTrace();
 	}finally{
 		try{
 			if(output != null){
-				output.flush();
 				output.close();
 			}
        	}catch(IOException ex){
@@ -88,6 +99,7 @@ public String echo(String s) throws RemoteException {
 public List<String> sendResult(Score score, int quizId) throws RemoteException, ClassCastException, UnsupportedOperationException{
 	addQuizScore(score, quizId);
 	List<String> topFive = getTopFiveScores(quizId);
+	writeToFile();
 	return topFive;
 }
 
@@ -172,6 +184,7 @@ public String closeQuiz(int quizId) throws RemoteException{
 				reply = "The winner was; " + playerId + getPlayerDetails(playerId) + " with a score of " + score + ".";
 			}
 			quizzes.remove(quiz);
+			writeToFile();
 		}
 	}
 	return reply;
