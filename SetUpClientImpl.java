@@ -63,8 +63,7 @@ public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws Remote
 				}
 				quiz.addQuestion(question);
 				System.out.println("");
-				System.out.println("To add another question type 'Y'.");
-				System.out.println("To finish creating the quiz type 'N'.");
+				System.out.println("Do you want to add another question? Y/N ");
 				quizComplete = System.console().readLine();
 			}
 			quiz.setNumOfQuestions();
