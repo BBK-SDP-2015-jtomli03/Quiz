@@ -78,15 +78,14 @@ public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws Remote
 			System.out.println("Please enter the quiz ID number, followed by the return key;");
 			quizId = Integer.parseInt(System.console().readLine());			
 			List<ScoreImpl> topScores = quizGame.closeQuiz(quizId);
-			String reply = "";
 			if(topScores.isEmpty()){
-				reply = "No players entered the quiz";
+				System.out.println("No players entered the quiz");
 			}
 			else{
 				System.out.println("The winner(s); ");
 				for(ScoreImpl score : topScores){
 					int playerId = score.getPlayerId();
-					reply = playerId + "  " + quizGame.getPlayerDetails(playerId) + " with a score of " + score.getPlayerScore() + ".";
+					System.out.println(playerId + "  " + quizGame.getPlayerDetails(playerId) + " with a score of " + score.getPlayerScore() + ".");
 				}
 			}
 			System.out.println("");
