@@ -2,6 +2,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class QuestionImpl implements Question, Serializable{
+	private static final long serialVersionUID = 1;
 	private String question = "";
 	private int correctAnswer = 0;
 	private String[] answers = new String[4];

@@ -10,6 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class QuizImpl implements Quiz, Serializable{
+	private static final long serialVersionUID = 1;
 	private int id = 0;
 	private String quizName = ""; 
 	private int numOfQuestions = 0;

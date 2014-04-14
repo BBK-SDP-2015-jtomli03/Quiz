@@ -2,6 +2,7 @@ import java.lang.ClassCastException;
 import java.io.Serializable;
 
 public class ScoreImpl implements Score, Comparable<Score>, Serializable{
+	private static final long serialVersionUID = 1;
 	int playerId = 0;
 	int playerScore = 0;
 

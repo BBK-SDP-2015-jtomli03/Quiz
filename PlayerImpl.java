@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 public class PlayerImpl implements Player, Serializable{
+	private static final long serialVersionUID = 1;
 	String userName = "";
 	int playerId = 0;
 
