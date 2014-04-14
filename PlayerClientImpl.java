@@ -75,13 +75,18 @@ private int Options(QuizGame quizGame) throws RemoteException{
 }
 
 private Quiz chooseQuiz(Quiz[] quizzes){
-	System.out.println("***Please choose a quiz to play by keying in its Quiz Number;***");
+	System.out.println("***CURRENT QUIZ LIST***");
 	System.out.println("");
 	for(Quiz quiz : quizzes){
 		System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName() + " (Total number of questions = " + quiz.getNumOfQuestions() + ")");
 	}
-	int quizNumber = Integer.parseInt(System.console().readLine());
-	Quiz quizToPlay = getQuizToPlay(quizzes, quizNumber);
+	Quiz quizToPlay = null;
+	while(quizToPlay == null){
+		System.out.println("");
+		System.out.println("***Please choose a quiz to play by keying in its QUIZ NUMBER;***");
+		int quizNumber = Integer.parseInt(System.console().readLine());
+		quizToPlay = getQuizToPlay(quizzes, quizNumber);
+	}
 	System.out.println("");
 	System.out.println("You have chosen to play " + quizToPlay.getQuizName() + "........GOOD LUCK!!");
 	return quizToPlay;
@@ -96,7 +101,11 @@ private int playQuiz(Quiz quizToPlay){
 		question.printAnswers();
 		System.out.println("");
 		System.out.print("Please key in your answer; ");
-			answer = Integer.parseInt(System.console().readLine()); //****try and catch NumberFormatException;
+			try{
+				answer = Integer.parseInt(System.console().readLine()); 
+			}catch(NumberFormatException ex){
+				System.out.println("You didn't enter a number.");
+			}
 		if(answer == question.getCorrectAnswer()){
 			score = score + 1;
 		}

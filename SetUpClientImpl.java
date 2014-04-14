@@ -84,7 +84,7 @@ public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws Remote
 			}
 			else{
 				System.out.println("The winner(s); ");
-				for(Score score : topScores){
+				for(ScoreImpl score : topScores){
 					int playerId = score.getPlayerId();
 					reply = playerId + "  " + quizGame.getPlayerDetails(playerId) + " with a score of " + score.getPlayerScore() + ".";
 				}
