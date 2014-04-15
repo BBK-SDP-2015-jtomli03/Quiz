@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.lang.ClassCastException;
 import java.lang.UnsupportedOperationException;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.lang.Cloneable;
 
 
 
@@ -45,7 +46,13 @@ public List<ScoreImpl> getHighScore(){
 public List<ScoreImpl> getOrderedScores() throws ClassCastException, UnsupportedOperationException{
 	List<ScoreImpl> scoresToSort = new ArrayList<ScoreImpl>();
 	for(Score score : scores){
-		ScoreImpl downCast = (ScoreImpl) score;
+		Score cloned = new ScoreImpl();
+		try{
+			cloned = (Score)score.clone();
+		}catch(CloneNotSupportedException ex){
+			ex.printStackTrace();
+		}
+		ScoreImpl downCast = (ScoreImpl) cloned;
 		scoresToSort.add(downCast);
 	}
 	Collections.sort(scoresToSort);
@@ -97,6 +104,10 @@ public List<Question> getQuestions(){
 @Override
 public void addScore(Score score){
 	scores.add(score);
+}
+
+private List<Score> getScores(){
+	return this.scores;
 }
 
 }

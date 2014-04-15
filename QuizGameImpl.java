@@ -68,7 +68,7 @@ private void getData(){
 }
 
 //write to file
-private void writeToFile(){
+private synchronized void writeToFile(){
 	ObjectOutputStream output = null;
 	try{
 		output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(FILENAME, false)));
@@ -91,7 +91,7 @@ private void writeToFile(){
 
 
 @Override
-public List<String> sendResult(Score score, int quizId) throws RemoteException, ClassCastException, UnsupportedOperationException{
+public synchronized List<String> sendResult(Score score, int quizId) throws RemoteException, ClassCastException, UnsupportedOperationException{
 	addQuizScore(score, quizId);
 	List<String> topFive = getTopFiveScores(quizId);
 	writeToFile();
@@ -114,7 +114,7 @@ private List<String> getTopFiveScores(int quizId) throws RemoteException{
 	return topFive;
 }
 
-public void addQuizScore(Score score, int quizId){
+public synchronized void addQuizScore(Score score, int quizId){
 	for(Quiz quiz : quizzes){
 		if(quiz.getId() == quizId){
 			quiz.addScore(score);
@@ -156,7 +156,7 @@ private int getUniqueId(){
 	return returnId;
 }
 
-public int addPlayer(String userName) throws RemoteException{
+public synchronized int addPlayer(String userName) throws RemoteException{
 	Player player = new PlayerImpl(userName);
 	player.setId(getUniqueId());
 	players.add(player);
@@ -166,7 +166,7 @@ public int addPlayer(String userName) throws RemoteException{
 
 
 @Override
-public List<ScoreImpl> closeQuiz(int quizId) throws RemoteException{
+public synchronized List<ScoreImpl> closeQuiz(int quizId) throws RemoteException{
 	List<ScoreImpl> highScores = null;
 	for(Quiz quiz: quizzes){
 		if(quiz.getId() == quizId){
@@ -192,7 +192,7 @@ public String getPlayerDetails(int playerId) throws RemoteException{
 
 //Adds a quiz to the Quiz Game Server
 @Override
-public int addQuiz(Quiz quiz) throws RemoteException{
+public synchronized int addQuiz(Quiz quiz) throws RemoteException{
 	quiz.setId(getUniqueId());
 	quizzes.add(quiz);
 	writeToFile();

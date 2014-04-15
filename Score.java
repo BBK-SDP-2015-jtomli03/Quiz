@@ -1,3 +1,5 @@
+import java.lang.Cloneable;
+
 /**
 * An interface to implement scores
 */
@@ -17,5 +19,12 @@ public int getPlayerScore();
 *@return the players ID number
 */
 public int getPlayerId();
+
+/**
+* Gets the players ID number
+*
+*@return the players ID number
+*/
+Object clone() throws CloneNotSupportedException;
 
 }

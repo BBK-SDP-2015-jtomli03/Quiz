@@ -1,7 +1,8 @@
 import java.lang.ClassCastException;
 import java.io.Serializable;
+import java.lang.Cloneable;
 
-public class ScoreImpl implements Score, Comparable<Score>, Serializable{
+public class ScoreImpl implements Score, Comparable<Score>, Serializable, Cloneable{
 	private static final long serialVersionUID = 1;
 	int playerId = 0;
 	int playerScore = 0;
@@ -9,6 +10,10 @@ public class ScoreImpl implements Score, Comparable<Score>, Serializable{
 	public ScoreImpl(int playerId, int playerScore){
 		this.playerId = playerId;
 		this.playerScore = playerScore;
+	}
+
+	public ScoreImpl(){
+		
 	}
 
 @Override
@@ -20,6 +25,12 @@ public class ScoreImpl implements Score, Comparable<Score>, Serializable{
 	public int getPlayerId(){
 		return playerId;
 	}
+
+@Override
+public Object clone() throws CloneNotSupportedException{
+	ScoreImpl cloned = (ScoreImpl)super.clone();
+	return cloned;
+}
 
 
 //compares the players scores
