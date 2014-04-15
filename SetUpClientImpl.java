@@ -20,8 +20,6 @@ private QuizGame launch() throws NotBoundException, MalformedURLException, Remot
 	}
 	Remote service = Naming.lookup("//127.0.0.1:1099/QuizMaster");		
 	QuizGame quizGame = (QuizGame) service;
-	String receivedEcho = quizGame.echo("*****Welcome to Quiz Master!*****");
-	System.out.println(receivedEcho);
 	return quizGame;
 }
 
@@ -146,6 +144,8 @@ private int getMenu(){
 
 private void startSetUp(QuizGame quizGame) throws RemoteException{
 	boolean finished = false;
+	System.out.println("*****Welcome to Quiz Master!*****");
+	System.out.println("");
 	while(!finished){
 		int choice = getMenu();		
 		switch (choice){

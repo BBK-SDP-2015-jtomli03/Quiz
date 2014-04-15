@@ -89,11 +89,6 @@ private void writeToFile(){
 	}
 }
 
-@Override
-public String echo(String s) throws RemoteException {
-	System.out.println("Client connected.");
-	return s;
-}
 
 @Override
 public List<String> sendResult(Score score, int quizId) throws RemoteException, ClassCastException, UnsupportedOperationException{
@@ -205,17 +200,12 @@ public int addQuiz(Quiz quiz) throws RemoteException{
 }
 
 private void launch(){
-	//1. If there is no security manager, start one
 	if (System.getSecurityManager() == null) {
 	System.setSecurityManager(new RMISecurityManager());
 	}
 	try {
-	// 2. Create the registry if there is not one
 	LocateRegistry.createRegistry(1099);
-	// 3. Create the server object
 	QuizGame server = new QuizGameImpl();
-	// 4. Register (bind) the server object on the registy.
-	// The registry may be on a different machine
 	String registryHost = "//localhost/";
 	String serviceName = "QuizMaster";
 	Naming.rebind(registryHost + serviceName, server);
@@ -227,11 +217,12 @@ private void launch(){
 	}	
 }
 
+
 //Main method
 	public static void main (String[] args){
 		try{
 			QuizGameImpl quizGame = new QuizGameImpl();
-			quizGame.launch();
+			quizGame.launch();	
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 		}

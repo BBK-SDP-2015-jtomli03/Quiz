@@ -10,13 +10,6 @@ import java.util.*;
 public interface QuizGame extends Remote{
 
 /**
-* Returns the same string passed as parameter
-* @param String a string
-* @return String the same string passed as parameter
-*/
-public String echo(String s) throws RemoteException;
-
-/**
 * Adds a quiz to the Quiz Game Server
 *
 * @param Quiz the quiz to be added
