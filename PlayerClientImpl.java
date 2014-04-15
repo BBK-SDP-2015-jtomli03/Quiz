@@ -36,9 +36,19 @@ private boolean checkIdExists(QuizGame quizGame, int playerId) throws RemoteExce
 }
 
 private int idFromPlayer(){
-	System.out.println("");
-	System.out.println("Please key in your player ID number.");
-	return Integer.parseInt(System.console().readLine());
+	int id = 0;
+	boolean proceed = false;
+	while(!proceed){
+		System.out.println("");
+		System.out.println("Please key in your player ID number.");
+		try{
+			id = Integer.parseInt(System.console().readLine());
+			proceed = true;
+		}catch(NumberFormatException ex){
+			System.out.println("You didn't enter a number. Please try again.");
+		}
+	}
+	return id;
 }
 
 private int getNewPlayerId(QuizGame quizGame, String userName) throws RemoteException{
@@ -97,8 +107,12 @@ private Quiz chooseQuiz(Quiz[] quizzes){
 	while(quizToPlay == null){
 		System.out.println("");
 		System.out.println("***Please choose a quiz to play by keying in its QUIZ NUMBER;***");
-		int quizNumber = Integer.parseInt(System.console().readLine());
-		quizToPlay = getQuizToPlay(quizzes, quizNumber);
+		try{
+			int quizNumber = Integer.parseInt(System.console().readLine());
+			quizToPlay = getQuizToPlay(quizzes, quizNumber);
+		}catch(NumberFormatException ex){
+			System.out.println("You didn't enter a number. Please try again.");
+		}
 	}
 	System.out.println("");
 	System.out.println("You have chosen to play " + quizToPlay.getQuizName() + "........GOOD LUCK!!");
@@ -119,7 +133,12 @@ private int getPlayersAnswer(){
 		System.out.print("Please key in your answer; ");
 		try{
 			answer = Integer.parseInt(System.console().readLine());
-			tryAgain = false; 
+			if(answer < 1 || answer > 4){
+				System.out.println("That is not a valid answer.");
+			}
+			else{
+				tryAgain = false; 
+			}
 		}catch(NumberFormatException ex){
 			System.out.println("You didn't enter a number.");
 		}
