@@ -29,7 +29,7 @@ private void createQuiz(QuizGame quizGame) throws RemoteException{
 	Quiz quiz = nameQuiz();
 	addQuestions(quiz);
 	quiz.setNumOfQuestions();
-	System.out.println("****Your quiz id number is; " + quizGame.addQuiz(quiz) + "****");
+	System.out.println("****YOUR QUIZ ID NUMBER IS; " + quizGame.addQuiz(quiz) + "****");
 }
 
 private Quiz nameQuiz() throws RemoteException{
@@ -54,7 +54,7 @@ private void addQuestions(Quiz quiz){
 		addAnswers(question);
 		quiz.addQuestion(question);
 		System.out.println("");
-		System.out.println("Do you want to add another question? Y/N ");
+		System.out.println("Enter 'Y' if you want to add another question. Any other key to complete the quiz.");
 		quizComplete = System.console().readLine();
 	}
 }
@@ -81,8 +81,12 @@ private void addAnswers(Question question){
 private void closeQuiz(QuizGame quizGame) throws RemoteException{
 	int quizId = getQuizId();
 	List<ScoreImpl> topScores = quizGame.closeQuiz(quizId);
-	printTopScores(topScores, quizGame);
-	System.out.println("*****YOUR QUIZ HAS NOW BEEN CLOSED.*****");
+	try{
+		printTopScores(topScores, quizGame);
+		System.out.println("*****YOUR QUIZ HAS NOW BEEN CLOSED.*****");
+	}catch(NullPointerException ex){
+		System.out.println("The quiz ID entered is not valid. Please start again.");
+	}
 }
 
 private int getQuizId(){
@@ -140,20 +144,17 @@ private int getMenu(){
 	return choice;
 }
 
-
-public static void main (String[] args) throws NotBoundException, MalformedURLException, RemoteException{
+private void startSetUp(QuizGame quizGame) throws RemoteException{
 	boolean finished = false;
-	SetUpClientImpl newSetUpClient = new SetUpClientImpl();
-	QuizGame quizGame = newSetUpClient.launch();
 	while(!finished){
-		int choice = newSetUpClient.getMenu();		
+		int choice = getMenu();		
 		switch (choice){
 			case 1:
-				newSetUpClient.createQuiz(quizGame);
+				createQuiz(quizGame);
 			break;
 
 			case 2:
-				newSetUpClient.closeQuiz(quizGame);
+				closeQuiz(quizGame);
 			break;
 
 			case 3:
@@ -166,6 +167,12 @@ public static void main (String[] args) throws NotBoundException, MalformedURLEx
 			break;
 		}
 	}
+}
+
+public static void main (String[] args) throws NotBoundException, MalformedURLException, RemoteException{
+	SetUpClientImpl newSetUpClient = new SetUpClientImpl();
+	QuizGame quizGame = newSetUpClient.launch();
+	newSetUpClient.startSetUp(quizGame);
 }
 	
 }
