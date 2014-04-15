@@ -22,26 +22,6 @@ public QuizImpl(String quizName) throws RemoteException{
 	this.quizName = quizName;
 }
 
-
-//Returns the highest score
-/**@Override
-public Score getHighScore(){
-	Score maxScore = null;
-	int max = 0;
-	if (scores.isEmpty()){
-		return maxScore;
-	}
-	else{
-		for(Score score : scores){
-			if(score.getPlayerScore() >= max){
-				maxScore = score;
-				max = score.getPlayerScore();
-			}
-		}
-	return maxScore;
-	}
-}*/
-
 @Override
 public List<ScoreImpl> getHighScore(){
 	List<ScoreImpl> topScores = new CopyOnWriteArrayList<ScoreImpl>();

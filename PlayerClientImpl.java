@@ -75,6 +75,7 @@ private int Options(QuizGame quizGame) throws RemoteException{
 }
 
 private Quiz chooseQuiz(Quiz[] quizzes){
+	System.out.println("");
 	System.out.println("***CURRENT QUIZ LIST***");
 	System.out.println("");
 	for(Quiz quiz : quizzes){
@@ -161,15 +162,14 @@ public static void main (String[] args) throws NotBoundException, MalformedURLEx
 	int playerId = newPlayerClient.Options(quizGame);
 	Quiz[] quizzes = quizGame.getQuizList();
 	boolean play = true;
-		while(play){
-			System.out.println("");
-			Quiz quizToPlay = newPlayerClient.chooseQuiz(quizzes);
-			int score = newPlayerClient.playQuiz(quizToPlay);		
-			Score playerScore = new ScoreImpl(playerId, score);
-			List<String> topFive = quizGame.sendResult(playerScore, quizToPlay.getId());
-			newPlayerClient.printTopFive(topFive);
-			play = newPlayerClient.playAgain();
-		}
+	while(play){
+		Quiz quizToPlay = newPlayerClient.chooseQuiz(quizzes);
+		int score = newPlayerClient.playQuiz(quizToPlay);		
+		Score playerScore = new ScoreImpl(playerId, score);
+		List<String> topFive = quizGame.sendResult(playerScore, quizToPlay.getId());
+		newPlayerClient.printTopFive(topFive);
+		play = newPlayerClient.playAgain();
+	}
 }
 
 }

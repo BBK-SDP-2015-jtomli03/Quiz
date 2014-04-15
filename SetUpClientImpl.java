@@ -82,29 +82,44 @@ public void Options(SetUpClient newSetUpClient, QuizGame quizGame) throws Remote
 				System.out.println("No players entered the quiz");
 			}
 			else{
+				System.out.println("");
 				System.out.println("The winner(s); ");
 				for(ScoreImpl score : topScores){
 					int playerId = score.getPlayerId();
-					System.out.println(playerId + "  " + quizGame.getPlayerDetails(playerId) + " with a score of " + score.getPlayerScore() + ".");
+					System.out.println("Player " + playerId + "  " + quizGame.getPlayerDetails(playerId) + " with a score of " + score.getPlayerScore() + ".");
 				}
 			}
 			System.out.println("");
-			System.out.println("Your quiz has now been closed. ");
+			System.out.println("*****Your quiz has now been closed.*****");
 			newSetUpClient.Options(newSetUpClient, quizGame);
 			break;
 
 			case 3:
 			System.out.println("*****THANKYOU - GOODBYE!*****");
-			//close thread
+			break;
+
 			default:
 			System.out.println("Sorry I didn't understand that. Please try again. ");
 			newSetUpClient.Options(newSetUpClient, quizGame);
+			break;
 		}
+}
+
+private int getMenu(){
+	System.out.println("");
+	System.out.println("To CREATE a quiz press '1' followed by the return key.");
+	System.out.println("");
+	System.out.println("To CLOSE a quiz press '2' followed by the return key.");
+	System.out.println("");
+	System.out.println("To QUIT QuizMaster press '3' followed by the return key.");
+	return Integer.parseInt(System.console().readLine());
 }
 
 	public static void main (String[] args) throws NotBoundException, MalformedURLException, RemoteException{
 		SetUpClientImpl newSetUpClient = new SetUpClientImpl();
 		QuizGame quizGame = newSetUpClient.launch();
+		newSetUpClient.getMenu();
+
 		newSetUpClient.Options(newSetUpClient, quizGame);
 		
 	}
