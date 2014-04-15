@@ -82,7 +82,7 @@ private void closeQuiz(QuizGame quizGame) throws RemoteException{
 	int quizId = getQuizId();
 	List<ScoreImpl> topScores = quizGame.closeQuiz(quizId);
 	printTopScores(topScores, quizGame);
-	System.out.println("*****Your quiz has now been closed.*****");
+	System.out.println("*****YOUR QUIZ HAS NOW BEEN CLOSED.*****");
 }
 
 private int getQuizId(){
@@ -97,14 +97,14 @@ private void printTopScores(List<ScoreImpl> topScores, QuizGame quizGame) throws
 		System.out.println("No players entered the quiz");
 	}
 	else{
-		System.out.println("");
+		System.out.println("__________________________________________________________________");
 		System.out.println("The winner(s); ");
 		for(ScoreImpl score : topScores){
 			int playerId = score.getPlayerId();
 			System.out.println("Player " + playerId + "  " + quizGame.getPlayerDetails(playerId) + " with a score of " + score.getPlayerScore() + ".");
 		}
 	}
-	System.out.println("");
+	System.out.println("------------------------------------------------------------------");
 }
 
 
@@ -140,7 +140,7 @@ public static void main (String[] args) throws NotBoundException, MalformedURLEx
 			break;
 
 			default:
-			System.out.println("Sorry I didn't understand that. Please try again. ");
+				System.out.println("Sorry I didn't understand that. Please try again. ");
 			break;
 		}
 	}

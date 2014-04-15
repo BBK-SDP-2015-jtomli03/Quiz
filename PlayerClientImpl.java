@@ -27,60 +27,72 @@ private QuizGame launch() throws NotBoundException, MalformedURLException, Remot
 	return quizGame;
 }
 
-/**
-* Runs through the options for the PlayerClient
-*
-* @param QuizGame the quizGame_stub
-*
-* @return int the players ID number
-*/ 
-private int Options(QuizGame quizGame) throws RemoteException{
-		int playerId = 0;
-		boolean optionChosen = false;
+private boolean checkIdExists(QuizGame quizGame, int playerId) throws RemoteException{
+	boolean idExists = quizGame.checkPlayerId(playerId);
+		if(!idExists){
+			System.out.println("This ID number does not exist. Please try again.");
+		}
+	return idExists;
+}
+
+private int idFromPlayer(){
+	System.out.println("");
+	System.out.println("Please key in your player ID number.");
+	return Integer.parseInt(System.console().readLine());
+}
+
+private int getNewPlayerId(QuizGame quizGame, String userName) throws RemoteException{
+	int playerId = quizGame.addPlayer(userName);
+	System.out.println("");
+	System.out.println("Your username is " + userName + " and your player ID number = " + playerId);
+	System.out.println("**(Please keep this safe as you will need it to play future quizzes.)**");
+	return playerId;
+}
+
+private String createUserName(){
+	System.out.println("");
+	System.out.println("To set up a player account please enter your username, followed by the return key.");
+	return System.console().readLine();
+}
+
+
+private int playerSetUp(QuizGame quizGame) throws RemoteException{
+	int playerId = 0;
+	boolean optionChosen = false;
 	while(!optionChosen){
 		System.out.println("Are you a returning player? Y or N.");
 		String choice = System.console().readLine();
 		switch (choice.toUpperCase()){
 			case "Y":
-			System.out.println("");
-			System.out.println("Please key in your player ID number.");
-			playerId = Integer.parseInt(System.console().readLine());
-			boolean correctId = quizGame.checkPlayerId(playerId);
-			if(!correctId){
-				System.out.println("This ID number does not exist. Please try again.");
-			}
-			else{
-				optionChosen = true;
-			}
-			break;
+					playerId = idFromPlayer();
+					optionChosen = checkIdExists(quizGame, playerId);
+					break;
 
 			case "N":
-			System.out.println("");
-			System.out.println("To set up a player account please enter your username, followed by the return key.");
-			String userName = System.console().readLine();
-			playerId = quizGame.addPlayer(userName);
-			System.out.println("");
-			System.out.println("Your username is " + userName + " and your player ID number = " + playerId);
-			System.out.println("**(Please keep this safe as you will need it to play future quizzes.)**");
-			optionChosen = true;
-			break;
+					String userName = createUserName();
+					playerId = getNewPlayerId(quizGame, userName);
+					optionChosen = true;
+					break;
 
 			default:
-			System.out.println("Sorry I didn't understand that.");
-			break;
+					System.out.println("Sorry I didn't understand that.");
+					break;
 		}
-
 	}
 	return playerId;
 }
 
-private Quiz chooseQuiz(Quiz[] quizzes){
+private void printQuizList(Quiz[] quizzes){
 	System.out.println("");
 	System.out.println("***CURRENT QUIZ LIST***");
 	System.out.println("");
-	for(Quiz quiz : quizzes){
-		System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName() + " (Total number of questions = " + quiz.getNumOfQuestions() + ")");
+		for(Quiz quiz : quizzes){
+			System.out.println("Quiz Number " + quiz.getId() + "; " + quiz.getQuizName() + " (Total number of questions = " + quiz.getNumOfQuestions() + ")");
 	}
+}
+
+private Quiz chooseQuiz(Quiz[] quizzes){
+	printQuizList(quizzes);
 	Quiz quizToPlay = null;
 	while(quizToPlay == null){
 		System.out.println("");
@@ -93,26 +105,45 @@ private Quiz chooseQuiz(Quiz[] quizzes){
 	return quizToPlay;
 }
 
-private int playQuiz(Quiz quizToPlay){
-	int  answer = 0, score = 0;
-	for(Question question : quizToPlay.getQuestions()){
-		System.out.println("");
-		System.out.println(question.getQuestion());
-		System.out.println("");
-		question.printAnswers();
-		System.out.println("");
+private void printQuestion(Question question){
+	System.out.println("");
+	System.out.println(question.getQuestion());
+	System.out.println("");
+}
+
+private int getPlayersAnswer(){
+	boolean tryAgain = true;
+	int answer = 0;
+	System.out.println("");
+	while(tryAgain){
 		System.out.print("Please key in your answer; ");
-			try{
-				answer = Integer.parseInt(System.console().readLine()); 
-			}catch(NumberFormatException ex){
-				System.out.println("You didn't enter a number.");
-			}
+		try{
+			answer = Integer.parseInt(System.console().readLine());
+			tryAgain = false; 
+		}catch(NumberFormatException ex){
+			System.out.println("You didn't enter a number.");
+		}
+	}
+	return answer;
+}
+
+private void printResult(Quiz quizToPlay, int score){
+	System.out.println("");
+	System.out.println("***You have completed the quiz! You scored " + score + "/" + quizToPlay.getNumOfQuestions() + " ***");
+}
+
+
+private int playQuiz(Quiz quizToPlay){
+	int score = 0;
+	for(Question question : quizToPlay.getQuestions()){
+		printQuestion(question);
+		question.printAnswers();	
+		int answer = getPlayersAnswer();	
 		if(answer == question.getCorrectAnswer()){
 			score = score + 1;
 		}
-	}		
-	System.out.println("");
-	System.out.println("***You have completed the quiz! You scored " + score + "/" + quizToPlay.getNumOfQuestions() + " ***");
+	}
+	printResult(quizToPlay, score);		
 	return score;
 }
 		
@@ -159,7 +190,7 @@ private boolean playAgain(){
 public static void main (String[] args) throws NotBoundException, MalformedURLException, RemoteException{
 	PlayerClientImpl newPlayerClient = new PlayerClientImpl();
 	QuizGame quizGame = newPlayerClient.launch();
-	int playerId = newPlayerClient.Options(quizGame);
+	int playerId = newPlayerClient.playerSetUp(quizGame);
 	Quiz[] quizzes = quizGame.getQuizList();
 	boolean play = true;
 	while(play){
