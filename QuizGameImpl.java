@@ -235,8 +235,6 @@ private void launch(){
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 		}
-
-	}
-	
+	}	
 
 }

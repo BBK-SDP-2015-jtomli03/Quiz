@@ -86,10 +86,20 @@ private void closeQuiz(QuizGame quizGame) throws RemoteException{
 }
 
 private int getQuizId(){
-	System.out.println("*****You have chosen to close a quiz.*****");
-	System.out.println("");
-	System.out.println("Please enter the quiz ID number, followed by the return key;");
-	return Integer.parseInt(System.console().readLine());	
+	int choice = 0;
+	boolean tryAgain = true;
+	while(tryAgain){
+		try{
+			System.out.println("*****You have chosen to close a quiz.*****");
+			System.out.println("");
+			System.out.println("Please enter the quiz ID number, followed by the return key;");
+			choice = Integer.parseInt(System.console().readLine());
+			tryAgain = false;
+		}catch(NumberFormatException ex){
+			System.out.println("You didn't enter a number.");
+		}
+	}
+	return choice;	
 }
 
 private void printTopScores(List<ScoreImpl> topScores, QuizGame quizGame) throws RemoteException{
@@ -109,13 +119,25 @@ private void printTopScores(List<ScoreImpl> topScores, QuizGame quizGame) throws
 
 
 private int getMenu(){
-	System.out.println("");
-	System.out.println("To CREATE a quiz press '1' followed by the return key.");
-	System.out.println("");
-	System.out.println("To CLOSE a quiz press '2' followed by the return key.");
-	System.out.println("");
-	System.out.println("To QUIT QuizMaster press '3' followed by the return key.");
-	return Integer.parseInt(System.console().readLine());
+	int choice = 0;
+	boolean tryAgain = true;
+	while(tryAgain){
+		try{
+			System.out.println("");
+			System.out.println("                    MENU");
+			System.out.println("                   -------");
+			System.out.println("To CREATE a quiz press '1' followed by the return key.");
+			System.out.println("");
+			System.out.println("To CLOSE a quiz press '2' followed by the return key.");
+			System.out.println("");
+			System.out.println("To QUIT QuizMaster press '3' followed by the return key.");
+			choice = Integer.parseInt(System.console().readLine());
+			tryAgain = false;
+		}catch(NumberFormatException ex){
+			System.out.println("You didn't enter a number.");
+		}
+	}
+	return choice;
 }
 
 
@@ -124,7 +146,7 @@ public static void main (String[] args) throws NotBoundException, MalformedURLEx
 	SetUpClientImpl newSetUpClient = new SetUpClientImpl();
 	QuizGame quizGame = newSetUpClient.launch();
 	while(!finished){
-		int choice = newSetUpClient.getMenu();
+		int choice = newSetUpClient.getMenu();		
 		switch (choice){
 			case 1:
 				newSetUpClient.createQuiz(quizGame);
