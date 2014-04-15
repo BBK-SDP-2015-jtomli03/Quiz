@@ -46,12 +46,7 @@ public List<ScoreImpl> getHighScore(){
 public List<ScoreImpl> getOrderedScores() throws ClassCastException, UnsupportedOperationException{
 	List<ScoreImpl> scoresToSort = new ArrayList<ScoreImpl>();
 	for(Score score : scores){
-		Score cloned = new ScoreImpl();
-		try{
-			cloned = (Score)score.clone();
-		}catch(CloneNotSupportedException ex){
-			ex.printStackTrace();
-		}
+		Score cloned = getClonedScore(score);
 		ScoreImpl downCast = (ScoreImpl) cloned;
 		scoresToSort.add(downCast);
 	}
@@ -59,7 +54,15 @@ public List<ScoreImpl> getOrderedScores() throws ClassCastException, Unsupported
 	return scoresToSort;
 }
 
-
+private Score getClonedScore(Score score){
+	Score cloned = new ScoreImpl();
+	try{
+		cloned = (Score)score.clone();
+	}catch(CloneNotSupportedException ex){
+		ex.printStackTrace();
+	}
+	return cloned;
+}
 
 //Gets the quiz ID number
 @Override
