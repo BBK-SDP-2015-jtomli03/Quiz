@@ -21,18 +21,26 @@ HOW TO RUN:
 
 *To start the server;
 ----------------------
-1) Create the stub to be sent to clients by keying in on the command line; rmic QuizGameImpl
-2) Launch the server on the command line by keying in; java -Djava.security.policy=server.policy QuizGameImpl
+1) Create the stub to be sent to clients by keying in on the command line; 
+    rmic QuizGameImpl
+
+2) Launch the server on the command line by keying in; 
+    java -Djava.security.policy=server.policy QuizGameImpl
+
 3) To close the server (note all data already saved to the quiz and player lists will already be written to file) from the command line key; ctrl+c
 
 *To start SetUpClientImpl;
 ---------------------------
-1) Launch on a separate command line by keying in; java -Djava.security.policy=client.policy SetUpClientImpl
+1) Launch on a separate command line by keying in; 
+    java -Djava.security.policy=client.policy SetUpClientImpl
+
 2) Note; the program has a 'quit' option to close the program.
 
 *To start PlayerClientImpl;
 ---------------------------
-1) Launch on a separate command line by keying in; java -Djava.security.policy=client.policy PlayerClientImpl
+1) Launch on a separate command line by keying in; 
+    java -Djava.security.policy=client.policy PlayerClientImpl
+
 2) Note; the program has a 'quit' option to close the program.
 
 
