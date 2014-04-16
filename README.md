@@ -19,7 +19,7 @@ HOW TO RUN:
 -----------
 *Ensure all files for the Quiz system are saved in the same file so that they have the same class path. Set this class path on the command line.
 
-*To start the server;
+*To start the server (QuizGameImpl);
 ----------------------
 1) Create the stub to be sent to clients by keying in on the command line; 
     rmic QuizGameImpl
@@ -27,7 +27,10 @@ HOW TO RUN:
 2) Launch the server on the command line by keying in; 
     java -Djava.security.policy=server.policy QuizGameImpl
 
-3) To close the server (note all data already saved to the quiz and player lists will already be written to file) from the command line key; ctrl+c
+3) To close the server from the command line key; ctrl+c
+
+If the server is unexpectedly closed, all the data already in the servers lists will already be saved to the QuizMaster.txt file. On restarting the server this data will be retrieved from the file.
+
 
 *To start SetUpClientImpl;
 ---------------------------
