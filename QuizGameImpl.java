@@ -68,7 +68,7 @@ private void getData(){
 }
 
 //write to file
-private synchronized void writeToFile(){
+private void writeToFile(){
 	ObjectOutputStream output = null;
 	try{
 		output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(FILENAME, false)));
@@ -114,7 +114,7 @@ private List<String> getTopFiveScores(int quizId) throws RemoteException{
 	return topFive;
 }
 
-public synchronized void addQuizScore(Score score, int quizId){
+public void addQuizScore(Score score, int quizId){
 	for(Quiz quiz : quizzes){
 		if(quiz.getId() == quizId){
 			quiz.addScore(score);
