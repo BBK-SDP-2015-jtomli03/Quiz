@@ -141,7 +141,7 @@ public Quiz[] getQuizList() throws RemoteException{
 
 //Checks if a player ID exists in the players list
 @Override
-public boolean checkPlayerId(int playerId) throws RemoteException{
+public synchronized boolean checkPlayerId(int playerId) throws RemoteException{
 	for(Player player : players){
 		if(player.getId() == playerId){
 			return true;
@@ -181,7 +181,7 @@ public synchronized List<ScoreImpl> closeQuiz(int quizId) throws RemoteException
 
 //Gets a players details by their ID
 @Override
-public String getPlayerDetails(int playerId) throws RemoteException{
+public synchronized String getPlayerDetails(int playerId) throws RemoteException{
 	for(Player player : players){
 		if(player.getId() == playerId){
 			return player.getUserName();
