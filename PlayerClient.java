@@ -1,20 +1,12 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-
 /**
-* An implementation of the SetUpClient
-*/ 
+* A class to allow players to set up player accounts and play quizzes.
+*
+* @author Jo Tomlinson
+*/
 public interface PlayerClient extends Remote{
 
-
-
-
-//method to input player ID and get a list of quizzes
-//choose quiz
-//play quiz
-//submit quiz
-//score returned
-//?play another quiz/quit
 
 }

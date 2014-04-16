@@ -9,13 +9,25 @@ import java.util.List;
 import java.util.ArrayList;
 import java.lang.NumberFormatException;
 
+/**
+* Allows players to set up player accounts and play quizzes.
+*
+* @author Jo Tomlinson
+*/
 public class PlayerClientImpl implements Serializable, PlayerClient{
 	
-	public PlayerClientImpl(){
+public PlayerClientImpl(){
 
-	}
+}
 
-//launch
+/**
+* Launches the PlayerClientImpl.
+*
+* @throws NotBoundException if the registry cannot find the QuizGame server.
+* @throws MalformedURLException if the servers name is incorrect.
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
+* @return the stub to the QuizGame server.
+*/
 private QuizGame launch() throws NotBoundException, MalformedURLException, RemoteException{
 	if (System.getSecurityManager() == null){
 		System.setSecurityManager(new RMISecurityManager());
@@ -25,6 +37,14 @@ private QuizGame launch() throws NotBoundException, MalformedURLException, Remot
 	return quizGame;
 }
 
+/**
+* Checks that a players ID number exists.
+*
+* @param quizGame the stub to the QuizGame server.
+* @throws playerId the players unique ID number.
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
+* @return boolean true if the ID exists, false if not.
+*/
 private boolean checkIdExists(QuizGame quizGame, int playerId) throws RemoteException{
 	boolean idExists = quizGame.checkPlayerId(playerId);
 		if(!idExists){
@@ -33,6 +53,12 @@ private boolean checkIdExists(QuizGame quizGame, int playerId) throws RemoteExce
 	return idExists;
 }
 
+/**
+* Takes a player ID number as inputted by the player, and returns this ID only if the input doesn't throw a NumberFormatException
+*
+* @exception NumberFormatException caught if the player keys in anything other than an int. They will be asked to try again.
+* @return the keyed in int value which may or may not be a valid player ID number.
+*/
 private int idFromPlayer(){
 	int id = 0;
 	boolean proceed = false;
@@ -49,6 +75,14 @@ private int idFromPlayer(){
 	return id;
 }
 
+/**
+* Adds a new Player to the players list on the QuizGame server, and gets the players unique ID number.
+*
+* @param quizGame the stub to the QuizGame server.
+* @param userName the players chosen username.
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
+* @return int the players unique ID number.
+*/
 private int getNewPlayerId(QuizGame quizGame, String userName) throws RemoteException{
 	int playerId = quizGame.addPlayer(userName);
 	System.out.println("");
@@ -57,13 +91,28 @@ private int getNewPlayerId(QuizGame quizGame, String userName) throws RemoteExce
 	return playerId;
 }
 
+/**
+* Takes the players chosen username
+*
+* @return String the players chosen username
+*/
 private String createUserName(){
 	System.out.println("");
 	System.out.println("To set up a player account please enter your username, followed by the return key.");
 	return System.console().readLine();
 }
 
-
+/**
+* The player set up menu to check if a player is new or returning.
+* If a player is new then they will be directed to set up an account, after which their ID number is returned.
+* If they are returning then they have to key in their player ID number, which is then checked against
+* the players list held on the Quizgame server. If correct the ID is returned. If incorrect or the player keys in
+* anything other than an int value they will be directed back to the menu.
+*
+* @param quizGame the stub to the QuizGame server.
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
+* @return int the players unique ID number.
+*/
 private int playerSetUp(QuizGame quizGame) throws RemoteException{
 	int playerId = 0;
 	boolean optionChosen = false;
@@ -92,6 +141,11 @@ private int playerSetUp(QuizGame quizGame) throws RemoteException{
 	return playerId;
 }
 
+/**
+* Shows on the user interface the list of available quizzes to play.
+*
+* @param quizzes an Array of available quizzes.
+*/
 private void printQuizList(Quiz[] quizzes){
 	System.out.println("");
 	System.out.println("***CURRENT QUIZ LIST***");
@@ -101,6 +155,14 @@ private void printQuizList(Quiz[] quizzes){
 	}
 }
 
+/**
+* Shows the player the list of available quizzes and returns their choice.
+*
+* @param quizzes the list of available quizzes.
+* @exception NumberFormatException caught if the player keys in anything other than an int for the quiz number. 
+* They will be asked to try again.
+* @return the chosen quiz.
+*/
 private Quiz chooseQuiz(Quiz[] quizzes){
 	printQuizList(quizzes);
 	Quiz quizToPlay = null;
@@ -119,12 +181,25 @@ private Quiz chooseQuiz(Quiz[] quizzes){
 	return quizToPlay;
 }
 
+/**
+* Shows on the user interface a quiz question.
+*
+* @param question the question to be printed.
+*/
 private void printQuestion(Question question){
 	System.out.println("");
 	System.out.println(question.getQuestion());
 	System.out.println("");
 }
 
+/**
+* Takes the players answer to set of multiple choice answers. The game will not proceed unless a valid answer is entered.
+* The player will be told if their answer is invalid, ie is not an int between 1-4.
+*
+* @exception NumberFormatException caught if the player keys in anything other than an int for the answer. 
+* They will be asked to try again.
+* @return int the chosen answer.
+*/
 private int getPlayersAnswer(){
 	boolean tryAgain = true;
 	int answer = 0;
@@ -146,12 +221,24 @@ private int getPlayersAnswer(){
 	return answer;
 }
 
+/**
+* Shows on the user interface the players overall quiz score in the format; x/y, where x = player score, y = total questions. 
+*
+* @param quizToPlay the quiz that the score refers to.
+* @param score the players score.
+*/
 private void printResult(Quiz quizToPlay, int score){
 	System.out.println("");
 	System.out.println("***You have completed the quiz! You scored " + score + "/" + quizToPlay.getNumOfQuestions() + " ***");
 }
 
-
+/**
+* Allows a player to play a quiz; shows on the user interface the questions and possible answers, 
+* takes a players inputted answer, calculates the players score, and shows on the user interface the players score. 
+*
+* @param quizToPlay the quiz to play.
+* @return int the players score.
+*/
 private int playQuiz(Quiz quizToPlay){
 	int score = 0;
 	for(Question question : quizToPlay.getQuestions()){
@@ -165,7 +252,13 @@ private int playQuiz(Quiz quizToPlay){
 	printResult(quizToPlay, score);		
 	return score;
 }
-		
+
+/**
+* Shows on the user interface the top 5 scores for a quiz. If a quiz has been closed while a player has been playing it,
+* a message explaining this will show instead.
+*
+* @param topFive the list of top 5 scores.
+*/		
 private void printTopFive(List<String> topFive){
 	if(topFive == null){
 		System.out.println("");
@@ -181,6 +274,13 @@ private void printTopFive(List<String> topFive){
 	}
 }
 
+/**
+* Gets a quiz.
+*
+* @param quizzes an Array of available quizzes.
+* @param quizNumber the ID number of the quiz to be returned.
+* @return the requested Quiz.
+*/	
 private Quiz getQuizToPlay(Quiz[] quizzes, int quizNumber){
 	for(Quiz quiz : quizzes){
 		if(quiz.getId() == quizNumber){
@@ -190,6 +290,11 @@ private Quiz getQuizToPlay(Quiz[] quizzes, int quizNumber){
 	return null;
 }	
 
+/**
+* Checks if a player wants to play another quiz. If an invalid input is keyed, the player will be asked again.
+*
+* @return boolean true if the player wants to play another quiz; false if not.
+*/	
 private boolean playAgain(){
 	boolean answer = false, play = false;
 	while(!answer){
@@ -212,6 +317,13 @@ private boolean playAgain(){
 	return play;
 }
 
+/**
+* The main method from which PlayerClientImpl is launched, and the QuizGame server stub is returned to.
+* Verifys existing players and adds new players to the list of players on the QuizGame server.
+* Allows a player to choose and play a quiz.
+* Adds a playerScore to the quiz in the quizzes list on the QuizGameServer.
+* Asks if a player wants to play another quiz or quit.
+*/	
 public static void main (String[] args) throws NotBoundException, MalformedURLException, RemoteException{
 	PlayerClientImpl newPlayerClient = new PlayerClientImpl();
 	QuizGame quizGame = newPlayerClient.launch();
