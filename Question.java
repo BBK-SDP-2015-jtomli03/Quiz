@@ -1,36 +1,39 @@
+import java.util.*;
+
 /**
-* An interface to implement questions. A question has one question and 4 possible multiple choice answers.
+* A Question object has one question and 4 possible multiple choice answers. 
+* It stores the value of the correct answer as an int corresponding to its position in the Array of answers.
 */
 public interface Question{
 
 /**
-* Adds the correct answer to the question object
+* Adds the correct answer to the question.
 *
-*@param String the answer to be added
+*@param answer the answer to be added
 */
 void addCorrectAnswer(String answer);
 
 /**
-* Adds an incorrect answer to the question object
+* Adds an incorrect answer to the question object.
 *
-*@param String the answer to be added
+*@param answer the answer to be added
 */
 void addAnswer(String answer);	
 
 /**
-* Shows which answer from the list of choices is correct
+* Gets the position in Array answers of the correct answer.
 *
-*@return int the numbered position of the correct answer as printed on screen
+*@return int the position of the correct answer
 */
 int getCorrectAnswer();
 
 /**
-* Prints the possible answers to the question
+* Prints the multiple choice answers to the question
 */
 void printAnswers();
 
 /**
-* Shows the question
+* Gets the question
 *
 *@return String the question
 */
