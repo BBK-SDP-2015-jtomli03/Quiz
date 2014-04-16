@@ -92,6 +92,9 @@ private void writeToFile(){
 
 @Override
 public synchronized List<String> sendResult(Score score, int quizId) throws RemoteException, ClassCastException, UnsupportedOperationException{
+	if(!quizIsOpen(quizId)){
+		return null;
+	}
 	addQuizScore(score, quizId);
 	List<String> topFive = getTopFiveScores(quizId);
 	writeToFile();
@@ -112,6 +115,13 @@ private List<String> getTopFiveScores(int quizId) throws RemoteException{
 			}
 		}
 	return topFive;
+}
+
+private boolean quizIsOpen(int quizId){
+	if(getQuiz(quizId) == null){
+		return false;
+	}
+	return true;
 }
 
 public void addQuizScore(Score score, int quizId){

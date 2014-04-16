@@ -167,11 +167,17 @@ private int playQuiz(Quiz quizToPlay){
 }
 		
 private void printTopFive(List<String> topFive){
-	System.out.println("");
-	System.out.println("The top scores are; ");
-	System.out.println("");	
-	for(String result : topFive){
-		System.out.println(result);
+	if(topFive == null){
+		System.out.println("");
+		System.out.println("Sorry, the quiz was closed while you were playing.");
+	}
+	else{
+		System.out.println("");
+		System.out.println("The top scores are; ");
+		System.out.println("");	
+		for(String result : topFive){
+			System.out.println(result);
+		}
 	}
 }
 
