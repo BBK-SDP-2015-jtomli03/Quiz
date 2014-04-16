@@ -2,74 +2,81 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.lang.ClassCastException;
 import java.lang.UnsupportedOperationException;
-import java.util.*;
+import java.util.List;
 
 /**
-* An implementation of the Quiz Game Service
+* An implementation of the QuizGame server which manages the quizzes list, scores, players list, and unique ID count.
+* Data is persisted to a txt file to which the server reads and writes.
 */ 
 public interface QuizGame extends Remote{
 
 /**
-* Adds a quiz to the Quiz Game Server
+* Adds a Quiz to the list of quizzes and persists it to the QuizMaster.txt file.
 *
-* @param Quiz the quiz to be added
-*
-* @return int a unique quiz ID
+* @param the Quiz to be added.
+* @throws RemoteException if there is a problem with network connectivity to the client.
+* @return the unique ID number for the quiz.
 */
 int addQuiz(Quiz quiz) throws RemoteException;
 
 /**
-* Closes a quiz and removes from the Quiz Game Server list of quizzes
+* Closes a quiz by removing it from the quizzes list. The QuizMaster.txt file is updated.
 *
-* @param int the quiz to be removed's ID
-*
-* @return List<ScoreImpl>  the winners details and score
+* @param quizId the unique ID number of the quiz to be closed.
+* @throws RemoteException if there is a problem with network connectivity to the client.
+* @param a list containing the top score(s) with corresponding player details.
 */
 List<ScoreImpl>  closeQuiz(int quizId) throws RemoteException;
 
 /**
-* Adds a player to the Quiz Game Server list of players
+* Creates a player, sets their unique ID number, adds them to the players list, and returns their unique ID number.
 *
-* @param String the players username
-*
-* @return int a unique player ID
+* @param userName the players username.
+* @throws RemoteException if there is a problem with network connectivity to the client.
+* @param the unique player ID assigned to the player.
 */
 int addPlayer(String userName) throws RemoteException;
 
 /**
-* Checks if a players ID is in the players list
+* Checks if a player exists in the players list.
 *
-* @param int the players ID number
-*
-* @return boolean true if the ID exists, false if not
+* @param playerId the players ID to check.
+* @throws RemoteException if there is a problem with network connectivity to the client.
+* @return boolean true if the player exists, false if not.
 */
 boolean checkPlayerId(int playerId) throws RemoteException;
 
 /**
-* Returns a copy of the quizzes list as an array of type Quiz
+* Gets a copy of the list of quizzes as an Array.
 *
-* @return Quiz[] an array of the quiz list
+* @throws RemoteException if there is a problem with network connectivity to the client.
+* @return an Array of the quiz list.
 */
 Quiz[] getQuizList() throws RemoteException;
 
 /**
-* Returns a quiz result to the server and returns the top scores and player details of the quiz
+* Checks if a quiz is still open. If it is adds a players Score to it and returns a list of the top 5 scores. If not
+* returns null. Writes the data to file. 
 *
-* @param Score the players Score (Score has the variables int playerScore and int playerId)
-* @param int the ID of the quiz to which the result is to be added
-*
-* @return List<String>  a list of the top scores with player details for the quiz just played
+* @param score the Score (player score and id) to be added to a quiz.
+* @param quizId the id of the quiz to which the score is to be added.
+* @throws ClassCastException if the method getTopFiveScores returns a list of anything other than Strings.
+* @throws UnsupportedOperationException if a requsted operation is made on the list of Strings topFive.
+* @throws RemoteException if there is a problem with network connectivity to the client.
+* @return a list of the top 5 scores to a quiz (or less if there less than 5).
+* @return null if the quiz has closed.
 */
 List<String> sendResult(Score score, int quizId) throws RemoteException, ClassCastException, UnsupportedOperationException;
 
 /**
-* Gets a players details from their ID number
+* Gets the players details by their unique ID number.
 *
-* @param int the players ID number
-*
-* @return String the players details
+* @param the players unique ID number
+* @throws RemoteException if there is a problem with network connectivity to the client.
+* @return a Sring containing the players user name, or a "details not found" message if not.
 */
 String getPlayerDetails(int playerId) throws RemoteException;	
+
 }
 
 
