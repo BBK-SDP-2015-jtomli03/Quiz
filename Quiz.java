@@ -1,13 +1,13 @@
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.List;
-import java.rmi.RemoteException;
+//import java.rmi.RemoteException;
 import java.lang.ClassCastException;
 import java.lang.UnsupportedOperationException;
-import java.util.concurrent.CopyOnWriteArrayList;
+//import java.util.concurrent.CopyOnWriteArrayList;
 
 
 /**
-* Allows you to set up a quiz
+* Allows you to set up a Quiz
 */ 
 public interface Quiz{
 	
@@ -26,16 +26,17 @@ int getId();
 void setId(int id);
 
 /**
-* Adds a question to the quiz. Note; questions have answers.
+* Adds a Question to the quiz. A Question has a quiz question and 4 multiple choice answers.
 *
-* @param the question to be added
+* @param the Question to be added
 */
 void addQuestion(Question question);
 
 /**
-* Gets the highest score of the quiz which includes the players id for that score
+* Gets the highest Score (possibly plural if more than one player has the same top score)
+* of the quiz (A Score includes the actual score and the corresponding players unique ID number)
 *
-* @return List<ScoreImpl> with the highest score (possibly plural if more than one player has the same top score)
+* @return a list of the highest Score(s)
 */
 List<ScoreImpl> getHighScore();
 
@@ -54,21 +55,24 @@ String getQuizName();
 int getNumOfQuestions();
 
 /**
-* Sets the total number of questions in the quiz
+* Sets the int value numOfQuestions as the total number of questions in the quiz
 */
 void setNumOfQuestions();
 
 /**
-* Gets the questions for the quiz
+* Gets the list of Questions for the quiz (A Question contains a quiz question and 4 multiple choice answers).
 *
-* @return List<Question> the list of questions
+* @return List<Question> the list of Questions for this Quiz
 */
 List<Question> getQuestions();
 
 /**
-* Gets the top scores of a quiz
+* Gets an ordered list of ScoreImpl objects (includes the actual score and the corresponding players unique ID number)
+* in order of the highest score first
 *
-* @return List<Score> the list of top scores
+* @return a list of the highest ScoreImpl(s)
+* @throws ClassCastException if you try to sort a list whose elements cannot be compared to one another.
+* @throws UnsupportedOperationException if the Collections.sort() method is not supported.
 */
 List<ScoreImpl> getOrderedScores() throws ClassCastException, UnsupportedOperationException;
 
