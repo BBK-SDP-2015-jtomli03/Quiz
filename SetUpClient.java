@@ -8,8 +8,4 @@ import java.rmi.RemoteException;
 public interface SetUpClient extends Remote{
 
 
-
-
-
-
 }

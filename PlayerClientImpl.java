@@ -323,6 +323,10 @@ private boolean playAgain(){
 * Allows a player to choose and play a quiz.
 * Adds a playerScore to the quiz in the quizzes list on the QuizGameServer.
 * Asks if a player wants to play another quiz or quit.
+*
+* @throws NotBoundException if the registry cannot find the QuizGame server.
+* @throws MalformedURLException if the servers name is incorrect.
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
 */	
 public static void main (String[] args) throws NotBoundException, MalformedURLException, RemoteException{
 	PlayerClientImpl newPlayerClient = new PlayerClientImpl();

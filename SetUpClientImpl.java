@@ -7,13 +7,25 @@ import java.rmi.Naming;
 import java.net.MalformedURLException;
 import java.io.Serializable;
 
+/**
+* Allows a client to set up and close down a quiz.
+*
+* @author Jo Tomlinson
+*/
 public class SetUpClientImpl implements Serializable, SetUpClient{
 
-	public SetUpClientImpl(){
-		super();
-	}
+public SetUpClientImpl(){
+	super();
+}
 	
-//launch
+/**
+* Launches the SetUpClientImpl.
+*
+* @throws NotBoundException if the registry cannot find the QuizGame server.
+* @throws MalformedURLException if the servers name is incorrect.
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
+* @return the stub to the QuizGame server.
+*/
 private QuizGame launch() throws NotBoundException, MalformedURLException, RemoteException{
 	if (System.getSecurityManager() == null){
 		System.setSecurityManager(new RMISecurityManager());
@@ -23,6 +35,16 @@ private QuizGame launch() throws NotBoundException, MalformedURLException, Remot
 	return quizGame;
 }
 
+/**
+* Creates a quiz by allowing a client to create a quiz name, and add questions and multiple choice answers.
+* Sets the number of questions in the quiz (calculates how many questions have been added), and adds the Quiz
+* to the quizzes list on the QuizGame server. Displays the unique quiz ID number on the user interface.
+*
+* @param the stub to the QuizGame server. 
+* @throws NotBoundException if the registry cannot find the QuizGame server.
+* @throws MalformedURLException if the servers name is incorrect.
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
+*/
 private void createQuiz(QuizGame quizGame) throws RemoteException{
 	Quiz quiz = nameQuiz();
 	addQuestions(quiz);
@@ -30,6 +52,12 @@ private void createQuiz(QuizGame quizGame) throws RemoteException{
 	System.out.println("****YOUR QUIZ ID NUMBER IS; " + quizGame.addQuiz(quiz) + "****");
 }
 
+/**
+* Creates a Quiz object and initialises it's quizName according to the clients input.
+* 
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
+* @return Quiz initialised with the quizName only.
+*/
 private Quiz nameQuiz() throws RemoteException{
 	System.out.println("");
 	System.out.println("*****You have chosen to create a new quiz.*****");
@@ -42,6 +70,11 @@ private Quiz nameQuiz() throws RemoteException{
 	return quiz;
 }
 
+/**
+* Enables the client to add questions and answers to their quiz.
+* 
+* @param quiz the quiz to which the questions are to be added.
+*/
 private void addQuestions(Quiz quiz){
 	String quizComplete = "Y";
 	System.out.println("");
@@ -57,6 +90,12 @@ private void addQuestions(Quiz quiz){
 	}
 }
 
+/**
+* Enables the client to create a question
+* 
+* @param quNum the question number
+* @return the question
+*/
 private Question createQuestion(int quNum){
 	System.out.println("");
 	System.out.println("Please type a question;");
@@ -65,6 +104,11 @@ private Question createQuestion(int quNum){
 	return question;
 }
 
+/**
+* Enables the client to add the multiple choice answers to a question
+* 
+* @param question the Question to which the answers are to be added
+*/
 private void addAnswers(Question question){
 	System.out.println("Please type the CORRECT answer;");
 	String answer = System.console().readLine();
@@ -76,6 +120,13 @@ private void addAnswers(Question question){
 	}
 }
 
+/**
+* Closes a quiz and displays on the user interface the top score(s) and corresponding players details.
+* 
+* @param the stub to the QuizGame server. 
+* @exception NullPointerException if the quiz ID isn't valid. The client will be returned to the menu.
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
+*/
 private void closeQuiz(QuizGame quizGame) throws RemoteException{
 	int quizId = getQuizId();
 	List<ScoreImpl> topScores = quizGame.closeQuiz(quizId);
@@ -87,6 +138,12 @@ private void closeQuiz(QuizGame quizGame) throws RemoteException{
 	}
 }
 
+/**
+* Prompts the client to key in a quiz ID to close a quiz.
+* 
+* @exception NumberFormatException caught if the player keys in anything other than an int. They will be asked to try again.
+* @return int the quiz ID.
+*/
 private int getQuizId(){
 	int choice = 0;
 	boolean tryAgain = true;
@@ -104,6 +161,13 @@ private int getQuizId(){
 	return choice;	
 }
 
+/**
+* Displays on the user interface the top score(s) and corresponding players details.
+* 
+* @param the list of top score(s).
+* @param the stub to the QuizGame server. 
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
+*/
 private void printTopScores(List<ScoreImpl> topScores, QuizGame quizGame) throws RemoteException{
 	if(topScores.isEmpty()){
 		System.out.println("No players entered the quiz");
@@ -119,7 +183,13 @@ private void printTopScores(List<ScoreImpl> topScores, QuizGame quizGame) throws
 	System.out.println("------------------------------------------------------------------");
 }
 
-
+/**
+* The option menu for the SetUpClientImpl which is shown on the user interface. It takes the clients choice. If the choice 
+* is invalid the client is returned to the menu.
+*
+* @exception NumberFormatException caught if the player keys in anything other than an int. They will be directed to try again.
+* @return int the chosen option.
+*/
 private int getMenu(){
 	int choice = 0;
 	boolean tryAgain = true;
@@ -134,7 +204,6 @@ private int getMenu(){
 			System.out.println("");
 			System.out.println("To QUIT QuizMaster press '3' followed by the return key.");
 			choice = Integer.parseInt(System.console().readLine());
-			tryAgain = false;
 		}catch(NumberFormatException ex){
 			System.out.println("You didn't enter a number.");
 		}
@@ -142,6 +211,13 @@ private int getMenu(){
 	return choice;
 }
 
+/**
+* Shows the welcome menu on the user interface and responds according to the clients choice.
+* Choices are create a new quiz, close a quiz, or quit the program.
+*
+* @param the stub to the QuizGame server. 
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
+*/
 private void startSetUp(QuizGame quizGame) throws RemoteException{
 	boolean finished = false;
 	System.out.println("*****Welcome to Quiz Master!*****");
@@ -169,6 +245,13 @@ private void startSetUp(QuizGame quizGame) throws RemoteException{
 	}
 }
 
+/**
+* The main menu launches the SetUpClientImpl and starts the set up menu.
+*
+* @throws NotBoundException if the registry cannot find the QuizGame server.
+* @throws MalformedURLException if the servers name is incorrect.
+* @throws RemoteException if there is a problem with network connectivity to the QuizGame server.
+*/	
 public static void main (String[] args) throws NotBoundException, MalformedURLException, RemoteException{
 	SetUpClientImpl newSetUpClient = new SetUpClientImpl();
 	QuizGame quizGame = newSetUpClient.launch();
